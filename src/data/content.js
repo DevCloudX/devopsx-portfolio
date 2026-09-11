@@ -7,6 +7,8 @@ export const services = [
   { title: 'Monitoring & Observability', description: 'Prometheus, Grafana, VictoriaMetrics, ELK, Loki, Dynatrace and alerting.' },
   { title: 'Cloud Migration', description: 'Legacy-to-cloud migration, modernization, containerization and cost optimization.' },
   { title: 'Custom Automation', description: 'Python, PowerShell, n8n, APIs, workflow automation and internal tools.' },
+  { title: 'Interview Preparation', description: 'Mock DevOps interviews, system design practice, technical storytelling and targeted feedback.' },
+  { title: 'Assignment Coaching', description: 'Review take-home assignments, clarify requirements and strengthen your technical approach.' },
 ]
 
 export const projects = [
