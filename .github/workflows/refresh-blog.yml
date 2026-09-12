@@ -1,0 +1,33 @@
+name: Refresh DevOpsX Blog
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Pull one trusted feed entry
+        run: node scripts/refresh-blog.mjs
+      - name: Commit new blog entry
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/remoteBlogs.js; then
+            echo "No new blog entry to commit."
+            exit 0
+          fi
+          git add src/data/remoteBlogs.js
+          git commit -m "chore: refresh DevOpsX blog"
+          git push

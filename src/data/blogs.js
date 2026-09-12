@@ -1,3 +1,5 @@
+import { remoteBlogs } from './remoteBlogs'
+
 const topics = [
   ['Kubernetes', 'Kubernetes', 'production cluster operations, workload reliability and platform standards'],
   ['GitHub Actions', 'CI/CD', 'reusable workflows, secure releases and delivery automation'],
@@ -35,7 +37,7 @@ const formats = [
 
 const slugify = (value) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 
-export const blogs = topics.flatMap(([topic, category, focus], topicIndex) => formats.map(([format, summary], formatIndex) => {
+const starterBlogs = topics.flatMap(([topic, category, focus], topicIndex) => formats.map(([format, summary], formatIndex) => {
   const title = `${format} ${topic}`
   return {
     id: topicIndex * formats.length + formatIndex + 1,
@@ -51,5 +53,7 @@ export const blogs = topics.flatMap(([topic, category, focus], topicIndex) => fo
     ],
   }
 }))
+
+export const blogs = [...starterBlogs, ...remoteBlogs]
 
 export const getBlogBySlug = (slug) => blogs.find((blog) => blog.slug === slug)

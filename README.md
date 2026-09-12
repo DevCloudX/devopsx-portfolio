@@ -43,6 +43,10 @@ Copy `.env.example` to `.env.local` and set `VITE_GA_ID` to the public measureme
 
 Replace placeholder social values in `src/config/site.js`. Services, representative case studies, blog posts and placeholder testimonials live in `src/data/content.js`. Add a project or blog object there; only replace the testimonial placeholder with a verified reference and permission to publish it.
 
+## Scheduled blog refresh
+
+The workflow at `.github/workflows/refresh-blog.yml` runs daily at 07:00 UTC and can also be started manually from **Actions**. It reads trusted RSS feeds, adds one headline and short excerpt to `src/data/remoteBlogs.js`, links to the original article, commits the update and triggers the normal GitHub Pages deployment. It does not copy full third-party articles.
+
 ## Static routing note
 
 The app renders `/devops-consulting` as a client-side route. GitHub Pages serves the root app correctly; for direct refreshes on nested routes, configure the host's SPA fallback or use internal navigation.
