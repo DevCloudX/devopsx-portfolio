@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { ArrowRight, Bot, Boxes, BriefcaseBusiness, Check, ClipboardCheck, Cloud, Code2, Container, GitBranch, Globe2, LockKeyhole, Menu, MessageCircle, Network, Radar, ShieldCheck, Sparkles, Terminal, X, Zap } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { ArrowRight, Bot, Boxes, BriefcaseBusiness, Check, ClipboardCheck, Cloud, Code2, Container, GitBranch, Globe2, LockKeyhole, Mail, Menu, MessageCircle, Network, Radar, ShieldCheck, Sparkles, Terminal, X, Zap } from 'lucide-react'
 import { CONTACT_FORM_ENDPOINT, CONTACT_EMAIL, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from './config/contact'
 import { siteConfig } from './config/site'
 import { services, projects, blogPosts } from './data/content'
@@ -14,7 +14,8 @@ const process = [{ number: '01', title: 'Discover', text: 'Understand your infra
 
 function Logo() { return <a className="logo" href="/" aria-label="DevOpsX home"><img className="logo-image" src={logoImage} alt="" /><span className="logo-wordmark">DevOps<span>X</span></span></a> }
 function Button({ children, href = '#contact', secondary = false, onClick }) { return <a className={`button ${secondary ? 'button-secondary' : ''}`} href={href} onClick={onClick}>{children}<ArrowRight size={16} /></a> }
-function WhatsAppButton() { const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`; return <a className="whatsapp-button" href={href} target="_blank" rel="noreferrer" aria-label="Message DevOpsX on WhatsApp" title="Message on WhatsApp"><MessageCircle size={23} /><span>WhatsApp</span></a> }
+function WhatsAppButton() { const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`; return <><a className="whatsapp-button" href={href} target="_blank" rel="noreferrer" aria-label="Message DevOpsX on WhatsApp" title="Message on WhatsApp"><MessageCircle size={23} /><span>WhatsApp</span></a><EmailButton /></> }
+function EmailButton() { return <a className="email-button" href={`mailto:${CONTACT_EMAIL}`} aria-label="Email Abhishek Rana" title="Email Abhishek Rana"><Mail size={22} /></a> }
 
 function BlogPostPage({ blog }) {
   if (!blog) return <div className="blog-page"><header className="editorial-header"><div className="editorial-header-inner"><Logo /></div></header><main className="blog-not-found"><span className="editorial-kicker">404 / FIELD NOTE NOT FOUND</span><h1>This article is not available.</h1><a className="editorial-primary" href="/">Back to DevOpsX <ArrowRight size={17} /></a></main></div>
@@ -71,6 +72,16 @@ function EditorialHome() {
   </div>
 }
 
-function App() { const path = window.location.pathname; const blogSlug = path.startsWith('/blog/') ? path.replace('/blog/', '').replace(/\/$/, '') : ''; if (path === '/blog' || path === '/blog/') return <BlogArchivePage />; return blogSlug ? <BlogPostPage blog={getBlogBySlug(blogSlug)} /> : <EditorialHome /> }
+function SimpleHome() {
+  const [pipelineState, setPipelineState] = useState('active')
+  useEffect(() => {
+    const failTimer = window.setTimeout(() => setPipelineState(pipelineState === 'active' ? 'error' : 'active'), pipelineState === 'active' ? 120000 : 5000)
+    return () => window.clearTimeout(failTimer)
+  }, [pipelineState])
+  const stages = pipelineState === 'error' ? [['SOURCE', 'restart'], ['VALIDATE', 'restart'], ['BUILD', 'restart'], ['SECURITY', 'restart'], ['DEPLOY', 'error']] : [['SOURCE', 'done'], ['VALIDATE', 'done'], ['BUILD', 'done'], ['SECURITY', 'done'], ['DEPLOY', 'active']]
+  return <div className="simple-site"><header className="simple-header"><Logo /><span><i /> OPEN FOR COLLABORATION</span></header><main><section className="simple-dashboard"><div className="simple-profile"><div className="simple-profile-top"><img src={logoImage} alt="DevOpsX mark" /><div><span className="simple-kicker">ABHISHEK RANA / DEVOPSX</span><h1>Abhishek Rana</h1><p>Senior DevSecOps Engineer</p><small>KEEPING PLATFORMS RUNNING SINCE 2017</small></div></div><span className="simple-kicker simple-kicker-spaced">PRACTICE STATUS</span><h2>Building <em>reliable systems.</em></h2><p className="simple-lede">Cloud infrastructure, automation and security for systems that need to keep moving. Available for freelance consulting, project delivery, interview preparation and technical assignment coaching.</p><div className="simple-links"><a href={`mailto:${CONTACT_EMAIL}`}>Email <ArrowRight size={15} /></a><a href="https://www.linkedin.com/in/abhishekrana0317/" target="_blank" rel="noreferrer">LinkedIn <ArrowRight size={15} /></a></div></div><aside className={`simple-build ${pipelineState}`}><div className="simple-build-head"><span>CI/CD PIPELINE</span><strong>{pipelineState === 'error' ? 'ERROR / RETRYING' : 'DEPLOYING'}</strong></div>{stages.map(([label, status]) => <div className={`simple-build-row ${status}`} key={label}><span>{status === 'done' ? '✓' : status === 'active' ? '→' : status === 'error' ? '×' : '↻'}</span><small>{label}</small><i><b /></i></div>)}<div className="simple-build-note">{pipelineState === 'error' ? <>Deployment failed verification.<br />Restarting from source.<br /><br />Retry loop active.</> : <>Pipeline checks passed.<br />Deployment is in progress.<br /><br />Release will be available after verification.</>}</div></aside></section><section className="simple-strip"><span>AWS</span><span>AZURE</span><span>KUBERNETES</span><span>GITHUB ACTIONS</span><span>TERRAFORM</span><span>DEVSECOPS</span></section><section className="simple-contact"><span className="simple-kicker">GET IN TOUCH</span><div className="simple-links"><a href={`mailto:${CONTACT_EMAIL}`}>Email Abhishek <ArrowRight size={15} /></a><a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">WhatsApp <ArrowRight size={15} /></a></div></section></main><footer className="simple-footer"><span>Platform engineering · DevSecOps · Cloud automation</span><span>© 2026 · Hyderabad,India</span></footer><WhatsAppButton /></div>
+}
+
+function App() { const path = window.location.pathname; const blogSlug = path.startsWith('/blog/') ? path.replace('/blog/', '').replace(/\/$/, '') : ''; if (path === '/blog' || path === '/blog/') return <BlogArchivePage />; return blogSlug ? <BlogPostPage blog={getBlogBySlug(blogSlug)} /> : <SimpleHome /> }
 
 export default App
