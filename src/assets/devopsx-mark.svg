@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">DevOpsX mark</title>
+  <desc id="desc">A cloud and terminal mark for DevOpsX</desc>
+  <defs>
+    <linearGradient id="glow" x1="8" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#55E4F2"/>
+      <stop offset="1" stop-color="#2378EA"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="60" height="60" rx="15" fill="#122B3B" stroke="#55E4F2" stroke-width="2"/>
+  <path d="M17 37.5h30M20 31.5c-1.9-7 3.3-12.6 9.5-12.6 3.2 0 6.1 1.5 7.8 4 1-.5 2.1-.8 3.3-.8 4.2 0 7.6 3.4 7.6 7.6 0 .6-.1 1.2-.2 1.8" fill="none" stroke="url(#glow)" stroke-linecap="round" stroke-width="3.5"/>
+  <path d="m25 43 5 5 5-5M39 43h5" fill="none" stroke="#B8F36B" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+</svg>

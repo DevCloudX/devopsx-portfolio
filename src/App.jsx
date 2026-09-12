@@ -4,7 +4,7 @@ import { CONTACT_FORM_ENDPOINT, CONTACT_EMAIL, WHATSAPP_MESSAGE, WHATSAPP_NUMBER
 import { siteConfig } from './config/site'
 import { services, projects, blogPosts } from './data/content'
 import { blogs, getBlogBySlug } from './data/blogs'
-import logoImage from './assets/devopsx.jpeg'
+import logoImage from './assets/devopsx-mark.svg'
 import './styles/global.css'
 
 const stats = [{ value: '5+', label: 'Years experience' }, { value: '50+', label: 'Projects delivered' }, { value: '20+', label: 'Teams supported' }, { value: '99.9%', label: 'Reliability focus' }]

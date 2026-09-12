@@ -109,8 +109,8 @@ h3 { letter-spacing: -0.03em; }
   width: 42px;
   height: 42px;
   object-fit: cover;
-  border: 1px solid rgba(85, 223, 242, 0.5);
-  border-radius: 9px;
+  border: 0;
+  border-radius: 15px;
 }
 .logo-wordmark { color: var(--text); font-size: 19px; font-weight: 800; letter-spacing: -0.05em; }
 .logo-wordmark span { color: var(--primary); }
