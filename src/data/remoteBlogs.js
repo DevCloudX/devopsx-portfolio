@@ -1,1 +1,3 @@
-export const remoteBlogs = []
+export const remoteBlogs = [
+  { id: 'remote-1789231358733', slug: 'kubernetes-v1-37-native-histograms-graduates-to-beta-1789231358734', title: 'Kubernetes v1.37: Native Histograms Graduates to Beta', category: 'KUBERNETES', readTime: 'External read', excerpt: '&lt;p>I\'m excited to announce that native histogram support for Kubernetes metrics is graduating to Beta and is enabled by default in Kubernetes v1.37!&lt;/p> &lt;p>&lt;em>Native histograms&lt;/em> (previously introduced', sourceUrl: 'https://kubernetes.io/blog/2026/09/11/kubernetes-v1-37-native-histograms-beta/', body: ['This DevOpsX field note highlights a new article from Kubernetes Blog.', 'Read the original source for the complete technical details, examples and implementation guidance.', 'Use the ideas as a starting point and validate them against your own platform, security requirements and operational context.'] },
+]
