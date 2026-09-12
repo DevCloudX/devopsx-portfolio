@@ -54,6 +54,6 @@ const starterBlogs = topics.flatMap(([topic, category, focus], topicIndex) => fo
   }
 }))
 
-export const blogs = [...starterBlogs, ...remoteBlogs]
+export const blogs = [...remoteBlogs, ...starterBlogs]
 
 export const getBlogBySlug = (slug) => blogs.find((blog) => blog.slug === slug)

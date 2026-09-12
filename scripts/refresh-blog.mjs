@@ -39,7 +39,7 @@ if (!next) {
 
 const safe = (value) => value.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, ' ')
 const excerpt = next.description.slice(0, 220) || `A new ${next.category.toLowerCase()} update from ${next.source}.`
-const entry = `  { id: 'remote-${Date.now()}', slug: '${slugify(next.title)}-${Date.now()}', title: '${safe(next.title)}', category: '${next.category}', readTime: 'External read', excerpt: '${safe(excerpt)}', sourceUrl: '${safe(next.link)}', body: ['This DevOpsX field note highlights a new article from ${safe(next.source)}.', 'Read the original source for the complete technical details, examples and implementation guidance.', 'Use the ideas as a starting point and validate them against your own platform, security requirements and operational context.'] },\n`
+const entry = `  { id: 'remote-${Date.now()}', slug: '${slugify(next.title)}-${Date.now()}', title: '${safe(next.title)}', category: '${next.category}', readTime: 'External read', publishedAt: '${new Date().toISOString().slice(0, 10)}', excerpt: '${safe(excerpt)}', sourceUrl: '${safe(next.link)}', body: ['This DevOpsX field note highlights a new article from ${safe(next.source)}.', 'Read the original source for the complete technical details, examples and implementation guidance.', 'Use the ideas as a starting point and validate them against your own platform, security requirements and operational context.'] },\n`
 const updated = existingSource.replace('export const remoteBlogs = [', `export const remoteBlogs = [\n${entry}`)
 await writeFile(outputPath, updated)
 console.log(`Added: ${next.title}`)

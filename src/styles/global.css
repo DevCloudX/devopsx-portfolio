@@ -1142,6 +1142,7 @@ textarea { resize: vertical; }
 .editorial-blog-card { display: flex; min-height: 235px; flex-direction: column; padding: 24px; border: 1px solid #d5e0e6; background: #ffffff; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
 .editorial-blog-card:hover { border-color: #70c8d5; box-shadow: 0 12px 28px rgba(27, 58, 76, .1); transform: translateY(-3px); }
 .editorial-blog-card h3 { margin: 13px 0 9px; color: #18232d; font-size: 19px; line-height: 1.2; }
+.editorial-new-badge { display: inline-block; align-self: flex-start; margin-top: 9px; padding: 4px 7px; border: 1px solid #7bcbd5; border-radius: 3px; color: #087ea4; font: 700 9px var(--mono); letter-spacing: .08em; }
 .editorial-blog-card p { margin: 0; color: #5e7180; font-size: 13px; line-height: 1.6; }
 .editorial-blog-card > div { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 20px; color: #8294a0; font: 10px var(--mono); }
 .editorial-blog-card a { display: inline-flex; align-items: center; gap: 6px; color: #087ea4; font: 800 11px var(--display); text-transform: uppercase; }
