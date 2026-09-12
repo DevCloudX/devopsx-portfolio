@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { ArrowRight, Bot, Boxes, BriefcaseBusiness, Check, ClipboardCheck, Cloud, Code2, Container, GitBranch, Globe2, LockKeyhole, Menu, Network, Radar, ShieldCheck, Sparkles, Terminal, X, Zap } from 'lucide-react'
-import { CONTACT_FORM_ENDPOINT, CONTACT_EMAIL } from './config/contact'
+import { ArrowRight, Bot, Boxes, BriefcaseBusiness, Check, ClipboardCheck, Cloud, Code2, Container, GitBranch, Globe2, LockKeyhole, Menu, MessageCircle, Network, Radar, ShieldCheck, Sparkles, Terminal, X, Zap } from 'lucide-react'
+import { CONTACT_FORM_ENDPOINT, CONTACT_EMAIL, WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from './config/contact'
 import { siteConfig } from './config/site'
 import { services, projects, blogPosts } from './data/content'
 import logoImage from './assets/devopsx.jpeg'
@@ -13,6 +13,7 @@ const process = [{ number: '01', title: 'Discover', text: 'Understand your infra
 
 function Logo() { return <a className="logo" href="#top" aria-label="DevOpsX home"><img className="logo-image" src={logoImage} alt="DevOpsX" /></a> }
 function Button({ children, href = '#contact', secondary = false, onClick }) { return <a className={`button ${secondary ? 'button-secondary' : ''}`} href={href} onClick={onClick}>{children}<ArrowRight size={16} /></a> }
+function WhatsAppButton() { const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`; return <a className="whatsapp-button" href={href} target="_blank" rel="noreferrer" aria-label="Message DevOpsX on WhatsApp" title="Message on WhatsApp"><MessageCircle size={23} /><span>WhatsApp</span></a> }
 
 function Navbar() {
   const [open, setOpen] = useState(false)
@@ -37,6 +38,6 @@ function Contact() { const [sent, setSent] = useState(false); const handleSubmit
 function Footer() { return <footer className="footer"><div className="footer-cta"><div><div className="eyebrow"><span /> READY WHEN YOU ARE</div><h2>Make the next<br /><em>move count.</em></h2></div><Button>Book a Project Call</Button></div><div className="footer-main"><div className="footer-brand"><Logo /><p>Build. Automate. Secure. Scale.</p><span className="footer-status"><i /> Available for remote consulting worldwide.</span></div><div className="footer-links"><div><span>Explore</span><a href="#services">Services</a><a href="#projects">Projects</a><a href="#about">About</a></div><div><span>Connect</span><a href={siteConfig.social.linkedin}>LinkedIn</a><a href={siteConfig.social.github}>GitHub</a><a href={siteConfig.social.youtube}>YouTube</a></div></div></div><div className="footer-bottom"><span>© 2026 DevOpsX. All rights reserved.</span><span>Independent DevOps & cloud consulting</span></div></footer> }
 
 function AdLanding() { return <><Navbar /><main><section className="landing-hero section-pad"><div className="eyebrow"><span /> DEVOPS & CLOUD CONSULTING</div><h1>Hire a DevOps &<br /><em>Cloud Consultant.</em></h1><p>AWS, Azure, Kubernetes, Terraform, CI/CD and DevSecOps expertise for your next project.</p><Button>Book a Free Consultation</Button></section><Services /><Technologies /><Projects /><Engagement /><Contact /></main><Footer /></> }
-function App() { const isLanding = window.location.pathname === '/devops-consulting' || window.location.hash === '#devops-consulting'; return isLanding ? <AdLanding /> : <><Navbar /><main><Hero /><Stats /><Services /><Solutions /><Technologies /><Projects /><Process /><About /><Engagement /><Blog /><Contact /></main><Footer /></> }
+function App() { const isLanding = window.location.pathname === '/devops-consulting' || window.location.hash === '#devops-consulting'; return isLanding ? <><AdLanding /><WhatsAppButton /></> : <><Navbar /><main><Hero /><Stats /><Services /><Solutions /><Technologies /><Projects /><Process /><About /><Engagement /><Blog /><Contact /></main><Footer /><WhatsAppButton /></> }
 
 export default App
