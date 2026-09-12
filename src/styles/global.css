@@ -106,12 +106,14 @@ h3 { letter-spacing: -0.03em; }
 }
 
 .logo-image {
-  width: 148px;
-  height: 50px;
-  object-fit: contain;
-  border-radius: 5px;
-  background: #ffffff;
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border: 1px solid rgba(85, 223, 242, 0.5);
+  border-radius: 9px;
 }
+.logo-wordmark { color: var(--text); font-size: 19px; font-weight: 800; letter-spacing: -0.05em; }
+.logo-wordmark span { color: var(--primary); }
 
 .logo-accent { color: var(--primary); }
 .logo-mark {
@@ -1062,7 +1064,8 @@ textarea { resize: vertical; }
   background: #ffffff;
 }
 .editorial-header-inner { display: flex; align-items: center; justify-content: space-between; width: min(1180px, calc(100% - 80px)); height: 82px; margin: auto; }
-.editorial-header .logo-image { width: 132px; height: 45px; }
+.editorial-header .logo-image { width: 42px; height: 42px; }
+.editorial-header .logo-wordmark { color: #18232d; }
 .editorial-nav { display: flex; gap: 30px; margin-left: auto; margin-right: 32px; }
 .editorial-nav a, .editorial-menu { color: #566675; font: 600 13px var(--mono); transition: color .2s ease; }
 .editorial-nav a:hover, .editorial-menu:hover { color: #087ea4; }
@@ -1129,7 +1132,7 @@ textarea { resize: vertical; }
 .editorial-contact p { color: #5e7180; margin-bottom: 23px; }
 .editorial-footer { background: #101f2a; color: #c0d1d9; }
 .editorial-footer-inner { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: end; padding: 48px 0 26px; }
-.editorial-footer .logo-image { width: 130px; height: 42px; }
+.editorial-footer .logo-image { width: 42px; height: 42px; }
 .editorial-footer p { margin: 14px 0 0; color: #9db7c2; font: 12px var(--mono); }
 .editorial-footer-links { display: flex; gap: 22px; }
 .editorial-footer-links a { color: #d7f8ff; font-size: 13px; }

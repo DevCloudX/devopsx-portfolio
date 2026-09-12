@@ -4,7 +4,7 @@ import { CONTACT_FORM_ENDPOINT, CONTACT_EMAIL, WHATSAPP_MESSAGE, WHATSAPP_NUMBER
 import { siteConfig } from './config/site'
 import { services, projects, blogPosts } from './data/content'
 import { blogs, getBlogBySlug } from './data/blogs'
-import logoImage from './assets/devopsx-logo.png'
+import logoImage from './assets/devopsx.jpeg'
 import './styles/global.css'
 
 const stats = [{ value: '5+', label: 'Years experience' }, { value: '50+', label: 'Projects delivered' }, { value: '20+', label: 'Teams supported' }, { value: '99.9%', label: 'Reliability focus' }]
@@ -12,7 +12,7 @@ const technologies = { Cloud: ['AWS', 'Azure', 'Google Cloud'], Containers: ['Ku
 const serviceIcons = [Cloud, Container, GitBranch, Code2, ShieldCheck, Radar, Globe2, Bot, BriefcaseBusiness, ClipboardCheck]
 const process = [{ number: '01', title: 'Discover', text: 'Understand your infrastructure, application and business requirements.' }, { number: '02', title: 'Design', text: 'Create a practical architecture and implementation plan.' }, { number: '03', title: 'Implement', text: 'Build automation, infrastructure, CI/CD and security controls.' }, { number: '04', title: 'Optimize', text: 'Monitor, troubleshoot and continuously improve the platform.' }]
 
-function Logo() { return <a className="logo" href="/" aria-label="DevOpsX home"><img className="logo-image" src={logoImage} alt="DevOpsX" /></a> }
+function Logo() { return <a className="logo" href="/" aria-label="DevOpsX home"><img className="logo-image" src={logoImage} alt="" /><span className="logo-wordmark">DevOps<span>X</span></span></a> }
 function Button({ children, href = '#contact', secondary = false, onClick }) { return <a className={`button ${secondary ? 'button-secondary' : ''}`} href={href} onClick={onClick}>{children}<ArrowRight size={16} /></a> }
 function WhatsAppButton() { const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`; return <a className="whatsapp-button" href={href} target="_blank" rel="noreferrer" aria-label="Message DevOpsX on WhatsApp" title="Message on WhatsApp"><MessageCircle size={23} /><span>WhatsApp</span></a> }
 
