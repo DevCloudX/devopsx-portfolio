@@ -100,10 +100,14 @@ h3 { letter-spacing: -0.03em; }
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 19px;
-  font-weight: 800;
-  letter-spacing: -0.06em;
   white-space: nowrap;
+}
+
+.logo-image {
+  width: 142px;
+  height: 42px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 .logo-accent { color: var(--primary); }

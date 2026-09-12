@@ -3,6 +3,7 @@ import { ArrowRight, Bot, Boxes, BriefcaseBusiness, Check, ClipboardCheck, Cloud
 import { CONTACT_FORM_ENDPOINT, CONTACT_EMAIL } from './config/contact'
 import { siteConfig } from './config/site'
 import { services, projects, blogPosts } from './data/content'
+import logoImage from './assets/devopsx.jpeg'
 import './styles/global.css'
 
 const stats = [{ value: '5+', label: 'Years experience' }, { value: '50+', label: 'Projects delivered' }, { value: '20+', label: 'Teams supported' }, { value: '99.9%', label: 'Reliability focus' }]
@@ -10,7 +11,7 @@ const technologies = { Cloud: ['AWS', 'Azure', 'Google Cloud'], Containers: ['Ku
 const serviceIcons = [Cloud, Container, GitBranch, Code2, ShieldCheck, Radar, Globe2, Bot, BriefcaseBusiness, ClipboardCheck]
 const process = [{ number: '01', title: 'Discover', text: 'Understand your infrastructure, application and business requirements.' }, { number: '02', title: 'Design', text: 'Create a practical architecture and implementation plan.' }, { number: '03', title: 'Implement', text: 'Build automation, infrastructure, CI/CD and security controls.' }, { number: '04', title: 'Optimize', text: 'Monitor, troubleshoot and continuously improve the platform.' }]
 
-function Logo() { return <a className="logo" href="#top" aria-label="DevOpsX home"><span className="logo-mark"><span /><span /><span /></span><span>DevOps<span className="logo-accent">X</span></span></a> }
+function Logo() { return <a className="logo" href="#top" aria-label="DevOpsX home"><img className="logo-image" src={logoImage} alt="DevOpsX" /></a> }
 function Button({ children, href = '#contact', secondary = false, onClick }) { return <a className={`button ${secondary ? 'button-secondary' : ''}`} href={href} onClick={onClick}>{children}<ArrowRight size={16} /></a> }
 
 function Navbar() {
