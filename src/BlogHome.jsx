@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { ArrowRight, BarChart3, Bot, CalendarDays, CheckCircle2, Cloud, Code2, ExternalLink, Github, Linkedin, Mail, Menu, Search, ShieldCheck, Terminal, X } from 'lucide-react'
+import { ArrowRight, BarChart3, Bot, CalendarDays, CheckCircle2, Cloud, Code2, Github, Linkedin, Mail, Menu, Search, ShieldCheck, Terminal, X } from 'lucide-react'
 import { blogs } from './data/blogs'
 import './blog-home.css'
 

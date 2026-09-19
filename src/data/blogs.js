@@ -1,4 +1,4 @@
-import { remoteBlogs } from './remoteBlogs'
+import { remoteBlogs } from './remoteBlogs.js'
 
 const topics = [
   ['Kubernetes', 'Kubernetes', 'production cluster operations, workload reliability and platform standards'],

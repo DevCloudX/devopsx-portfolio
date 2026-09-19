@@ -1,0 +1,1179 @@
+[
+  {
+    "slug": "kubernetes-v1-37-memory-qos-graduates-to-beta-1789733005247",
+    "title": "Kubernetes v1.37: Memory QoS Graduates to Beta",
+    "description": "&lt;p>Memory QoS has graduated to Beta in Kubernetes v1.37 and is now enabled by default. On Linux nodes running cgroup v2, the feature uses the memory controller to give the kernel better guidance on how to treat contai",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": "2026-09-18"
+  },
+  {
+    "slug": "kubernetes-v1-37-hardening-container-storage-with-bind-mount-options-and-emptydi-1789647877114",
+    "title": "Kubernetes v1.37: Hardening Container Storage with Bind Mount Options and EmptyDir Permissions",
+    "description": "&lt;p>Kubernetes v1.37 brings important storage security features: &lt;code>emptyDir&lt;/code> permission modes and bind mount options. They help application programmers and security professionals implement rigorous secu",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": "2026-09-17"
+  },
+  {
+    "slug": "kubernetes-v1-37-pod-level-resource-managers-graduated-to-beta-1789561485024",
+    "title": "Kubernetes v1.37: Pod-Level Resource Managers graduated to Beta",
+    "description": "&lt;p>With the release of Kubernetes v1.37, the &lt;strong>Pod-Level Resource Managers&lt;/strong> feature has graduated to &lt;strong>Beta&lt;/strong> status (disabled by default)!&lt;/p> &lt;p>First introduced as an Al",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": "2026-09-16"
+  },
+  {
+    "slug": "kubernetes-changed-block-tracking-api-beta-differences-1789475222807",
+    "title": "Kubernetes Changed Block Tracking API - Beta Differences",
+    "description": "&lt;p>Changed Block Tracking (CBT) support for CSI drivers &lt;a href=\"https://kubernetes.io/blog/2025/09/25/csi-changed-block-tracking/\">shipped as Alpha&lt;/a> in September 2025. With the March 2026 &lt;code>v1.0.0&lt;",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": "2026-09-15"
+  },
+  {
+    "slug": "kubernetes-v1-37-introducing-node-lifecycle-conditions-1789393044622",
+    "title": "Kubernetes v1.37: Introducing Node Lifecycle Conditions",
+    "description": "&lt;p>Kubernetes has many ways to describe what is happening on a Node. Readiness, taints, Pod state, labels, annotations, and provider-specific APIs each expose part of the picture. What has been missing is a shared, Ku",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": "2026-09-14"
+  },
+  {
+    "slug": "kubernetes-v1-37-scheduler-preemption-for-in-place-pod-resize-alpha-1789302716869",
+    "title": "Kubernetes v1.37: Scheduler Preemption for In-Place Pod Resize (Alpha)",
+    "description": "&lt;p>In Kubernetes, resource allocation has historically been a static decision made during a Pod's initial scheduling and placement. With the graduation of the core &lt;a href=\"https://kubernetes.io/blog/2025/12/19/kub",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": "2026-09-13"
+  },
+  {
+    "slug": "kubernetes-v1-37-native-histograms-graduates-to-beta-1789231358734",
+    "title": "Kubernetes v1.37: Native Histograms Graduates to Beta",
+    "description": "&lt;p>I'm excited to announce that native histogram support for Kubernetes metrics is graduating to Beta and is enabled by default in Kubernetes v1.37!&lt;/p> &lt;p>&lt;em>Native histograms&lt;/em> (previously introduced",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "External read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-kubernetes-1",
+    "title": "A Practical Guide to Kubernetes",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply kubernetes to production cluster operations, workload reliability and platform standards.",
+    "category": "Kubernetes",
+    "tags": [
+      "Kubernetes"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-kubernetes-1",
+    "title": "Best Practices for Kubernetes",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply kubernetes to production cluster operations, workload reliability and platform standards.",
+    "category": "Kubernetes",
+    "tags": [
+      "Kubernetes"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-kubernetes-1",
+    "title": "Common Mistakes in Kubernetes",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply kubernetes to production cluster operations, workload reliability and platform standards.",
+    "category": "Kubernetes",
+    "tags": [
+      "Kubernetes"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-kubernetes-1",
+    "title": "A Production Checklist for Kubernetes",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply kubernetes to production cluster operations, workload reliability and platform standards.",
+    "category": "Kubernetes",
+    "tags": [
+      "Kubernetes"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-github-actions-2",
+    "title": "A Practical Guide to GitHub Actions",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply github actions to reusable workflows, secure releases and delivery automation.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-github-actions-2",
+    "title": "Best Practices for GitHub Actions",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply github actions to reusable workflows, secure releases and delivery automation.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-github-actions-2",
+    "title": "Common Mistakes in GitHub Actions",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply github actions to reusable workflows, secure releases and delivery automation.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-github-actions-2",
+    "title": "A Production Checklist for GitHub Actions",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply github actions to reusable workflows, secure releases and delivery automation.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-devsecops-3",
+    "title": "A Practical Guide to DevSecOps",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply devsecops to security controls, vulnerability response and developer enablement.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-devsecops-3",
+    "title": "Best Practices for DevSecOps",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply devsecops to security controls, vulnerability response and developer enablement.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-devsecops-3",
+    "title": "Common Mistakes in DevSecOps",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply devsecops to security controls, vulnerability response and developer enablement.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-devsecops-3",
+    "title": "A Production Checklist for DevSecOps",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply devsecops to security controls, vulnerability response and developer enablement.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-azure-container-apps-4",
+    "title": "A Practical Guide to Azure Container Apps",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply azure container apps to managed containers, environment design and Azure delivery patterns.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-azure-container-apps-4",
+    "title": "Best Practices for Azure Container Apps",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply azure container apps to managed containers, environment design and Azure delivery patterns.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-azure-container-apps-4",
+    "title": "Common Mistakes in Azure Container Apps",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply azure container apps to managed containers, environment design and Azure delivery patterns.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-azure-container-apps-4",
+    "title": "A Production Checklist for Azure Container Apps",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply azure container apps to managed containers, environment design and Azure delivery patterns.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-aws-lambda-5",
+    "title": "A Practical Guide to AWS Lambda",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply aws lambda to serverless architecture, event-driven systems and reliable deployments.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-aws-lambda-5",
+    "title": "Best Practices for AWS Lambda",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply aws lambda to serverless architecture, event-driven systems and reliable deployments.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-aws-lambda-5",
+    "title": "Common Mistakes in AWS Lambda",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply aws lambda to serverless architecture, event-driven systems and reliable deployments.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-aws-lambda-5",
+    "title": "A Production Checklist for AWS Lambda",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply aws lambda to serverless architecture, event-driven systems and reliable deployments.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-terraform-6",
+    "title": "A Practical Guide to Terraform",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply terraform to repeatable infrastructure, modules and multi-environment delivery.",
+    "category": "INFRASTRUCTURE",
+    "tags": [
+      "INFRASTRUCTURE"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-terraform-6",
+    "title": "Best Practices for Terraform",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply terraform to repeatable infrastructure, modules and multi-environment delivery.",
+    "category": "INFRASTRUCTURE",
+    "tags": [
+      "INFRASTRUCTURE"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-terraform-6",
+    "title": "Common Mistakes in Terraform",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply terraform to repeatable infrastructure, modules and multi-environment delivery.",
+    "category": "INFRASTRUCTURE",
+    "tags": [
+      "INFRASTRUCTURE"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-terraform-6",
+    "title": "A Production Checklist for Terraform",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply terraform to repeatable infrastructure, modules and multi-environment delivery.",
+    "category": "INFRASTRUCTURE",
+    "tags": [
+      "INFRASTRUCTURE"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-helm-7",
+    "title": "A Practical Guide to Helm",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply helm to chart design, release management and maintainable Kubernetes configuration.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-helm-7",
+    "title": "Best Practices for Helm",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply helm to chart design, release management and maintainable Kubernetes configuration.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-helm-7",
+    "title": "Common Mistakes in Helm",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply helm to chart design, release management and maintainable Kubernetes configuration.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-helm-7",
+    "title": "A Production Checklist for Helm",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply helm to chart design, release management and maintainable Kubernetes configuration.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-shell-scripting-8",
+    "title": "A Practical Guide to Shell scripting",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply shell scripting to portable scripts, operational tooling and safer automation.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-shell-scripting-8",
+    "title": "Best Practices for Shell scripting",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply shell scripting to portable scripts, operational tooling and safer automation.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-shell-scripting-8",
+    "title": "Common Mistakes in Shell scripting",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply shell scripting to portable scripts, operational tooling and safer automation.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-shell-scripting-8",
+    "title": "A Production Checklist for Shell scripting",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply shell scripting to portable scripts, operational tooling and safer automation.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-yaml-9",
+    "title": "A Practical Guide to YAML",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply yaml to configuration design, validation and readable automation pipelines.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-yaml-9",
+    "title": "Best Practices for YAML",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply yaml to configuration design, validation and readable automation pipelines.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-yaml-9",
+    "title": "Common Mistakes in YAML",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply yaml to configuration design, validation and readable automation pipelines.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-yaml-9",
+    "title": "A Production Checklist for YAML",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply yaml to configuration design, validation and readable automation pipelines.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-gitlab-to-github-migration-10",
+    "title": "A Practical Guide to GitLab to GitHub migration",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply gitlab to github migration to repository migration planning, workflow conversion and adoption.",
+    "category": "MIGRATION",
+    "tags": [
+      "MIGRATION"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-gitlab-to-github-migration-10",
+    "title": "Best Practices for GitLab to GitHub migration",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply gitlab to github migration to repository migration planning, workflow conversion and adoption.",
+    "category": "MIGRATION",
+    "tags": [
+      "MIGRATION"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-gitlab-to-github-migration-10",
+    "title": "Common Mistakes in GitLab to GitHub migration",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply gitlab to github migration to repository migration planning, workflow conversion and adoption.",
+    "category": "MIGRATION",
+    "tags": [
+      "MIGRATION"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-gitlab-to-github-migration-10",
+    "title": "A Production Checklist for GitLab to GitHub migration",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply gitlab to github migration to repository migration planning, workflow conversion and adoption.",
+    "category": "MIGRATION",
+    "tags": [
+      "MIGRATION"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-github-advanced-security-11",
+    "title": "A Practical Guide to GitHub Advanced Security",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply github advanced security to code scanning, secret detection and dependency risk management.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-github-advanced-security-11",
+    "title": "Best Practices for GitHub Advanced Security",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply github advanced security to code scanning, secret detection and dependency risk management.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-github-advanced-security-11",
+    "title": "Common Mistakes in GitHub Advanced Security",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply github advanced security to code scanning, secret detection and dependency risk management.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-github-advanced-security-11",
+    "title": "A Production Checklist for GitHub Advanced Security",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply github advanced security to code scanning, secret detection and dependency risk management.",
+    "category": "DEVSECOPS",
+    "tags": [
+      "DEVSECOPS"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-dora-metrics-12",
+    "title": "A Practical Guide to DORA metrics",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply dora metrics to delivery performance measurement and useful engineering reporting.",
+    "category": "RELIABILITY",
+    "tags": [
+      "RELIABILITY"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-dora-metrics-12",
+    "title": "Best Practices for DORA metrics",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply dora metrics to delivery performance measurement and useful engineering reporting.",
+    "category": "RELIABILITY",
+    "tags": [
+      "RELIABILITY"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-dora-metrics-12",
+    "title": "Common Mistakes in DORA metrics",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply dora metrics to delivery performance measurement and useful engineering reporting.",
+    "category": "RELIABILITY",
+    "tags": [
+      "RELIABILITY"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-dora-metrics-12",
+    "title": "A Production Checklist for DORA metrics",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply dora metrics to delivery performance measurement and useful engineering reporting.",
+    "category": "RELIABILITY",
+    "tags": [
+      "RELIABILITY"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-finops-13",
+    "title": "A Practical Guide to FinOps",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply finops to cloud cost ownership, visibility and practical optimization.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-finops-13",
+    "title": "Best Practices for FinOps",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply finops to cloud cost ownership, visibility and practical optimization.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-finops-13",
+    "title": "Common Mistakes in FinOps",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply finops to cloud cost ownership, visibility and practical optimization.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-finops-13",
+    "title": "A Production Checklist for FinOps",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply finops to cloud cost ownership, visibility and practical optimization.",
+    "category": "CLOUD",
+    "tags": [
+      "CLOUD"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-prometheus-14",
+    "title": "A Practical Guide to Prometheus",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply prometheus to metrics design, alert quality and Kubernetes monitoring.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-prometheus-14",
+    "title": "Best Practices for Prometheus",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply prometheus to metrics design, alert quality and Kubernetes monitoring.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-prometheus-14",
+    "title": "Common Mistakes in Prometheus",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply prometheus to metrics design, alert quality and Kubernetes monitoring.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-prometheus-14",
+    "title": "A Production Checklist for Prometheus",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply prometheus to metrics design, alert quality and Kubernetes monitoring.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-grafana-15",
+    "title": "A Practical Guide to Grafana",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply grafana to operational dashboards, useful signals and incident context.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-grafana-15",
+    "title": "Best Practices for Grafana",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply grafana to operational dashboards, useful signals and incident context.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-grafana-15",
+    "title": "Common Mistakes in Grafana",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply grafana to operational dashboards, useful signals and incident context.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-grafana-15",
+    "title": "A Production Checklist for Grafana",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply grafana to operational dashboards, useful signals and incident context.",
+    "category": "OBSERVABILITY",
+    "tags": [
+      "OBSERVABILITY"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-docker-16",
+    "title": "A Practical Guide to Docker",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply docker to image design, build security and container troubleshooting.",
+    "category": "CONTAINERS",
+    "tags": [
+      "CONTAINERS"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-docker-16",
+    "title": "Best Practices for Docker",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply docker to image design, build security and container troubleshooting.",
+    "category": "CONTAINERS",
+    "tags": [
+      "CONTAINERS"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-docker-16",
+    "title": "Common Mistakes in Docker",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply docker to image design, build security and container troubleshooting.",
+    "category": "CONTAINERS",
+    "tags": [
+      "CONTAINERS"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-docker-16",
+    "title": "A Production Checklist for Docker",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply docker to image design, build security and container troubleshooting.",
+    "category": "CONTAINERS",
+    "tags": [
+      "CONTAINERS"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-eks-17",
+    "title": "A Practical Guide to EKS",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply eks to AWS Kubernetes operations, scaling and production readiness.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-eks-17",
+    "title": "Best Practices for EKS",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply eks to AWS Kubernetes operations, scaling and production readiness.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-eks-17",
+    "title": "Common Mistakes in EKS",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply eks to AWS Kubernetes operations, scaling and production readiness.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-eks-17",
+    "title": "A Production Checklist for EKS",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply eks to AWS Kubernetes operations, scaling and production readiness.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-aks-18",
+    "title": "A Practical Guide to AKS",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply aks to Azure Kubernetes operations, identity and deployment patterns.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-aks-18",
+    "title": "Best Practices for AKS",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply aks to Azure Kubernetes operations, identity and deployment patterns.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-aks-18",
+    "title": "Common Mistakes in AKS",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply aks to Azure Kubernetes operations, identity and deployment patterns.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-aks-18",
+    "title": "A Production Checklist for AKS",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply aks to Azure Kubernetes operations, identity and deployment patterns.",
+    "category": "KUBERNETES",
+    "tags": [
+      "KUBERNETES"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-jenkins-19",
+    "title": "A Practical Guide to Jenkins",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply jenkins to pipeline modernization, administration and migration strategy.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-jenkins-19",
+    "title": "Best Practices for Jenkins",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply jenkins to pipeline modernization, administration and migration strategy.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-jenkins-19",
+    "title": "Common Mistakes in Jenkins",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply jenkins to pipeline modernization, administration and migration strategy.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-jenkins-19",
+    "title": "A Production Checklist for Jenkins",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply jenkins to pipeline modernization, administration and migration strategy.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-gitops-20",
+    "title": "A Practical Guide to GitOps",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply gitops to declarative delivery, reconciliation and environment promotion.",
+    "category": "DELIVERY",
+    "tags": [
+      "DELIVERY"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-gitops-20",
+    "title": "Best Practices for GitOps",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply gitops to declarative delivery, reconciliation and environment promotion.",
+    "category": "DELIVERY",
+    "tags": [
+      "DELIVERY"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-gitops-20",
+    "title": "Common Mistakes in GitOps",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply gitops to declarative delivery, reconciliation and environment promotion.",
+    "category": "DELIVERY",
+    "tags": [
+      "DELIVERY"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-gitops-20",
+    "title": "A Production Checklist for GitOps",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply gitops to declarative delivery, reconciliation and environment promotion.",
+    "category": "DELIVERY",
+    "tags": [
+      "DELIVERY"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-secrets-management-21",
+    "title": "A Practical Guide to Secrets management",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply secrets management to credential rotation, secret handling and least privilege.",
+    "category": "SECURITY",
+    "tags": [
+      "SECURITY"
+    ],
+    "readingTime": "9 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-secrets-management-21",
+    "title": "Best Practices for Secrets management",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply secrets management to credential rotation, secret handling and least privilege.",
+    "category": "SECURITY",
+    "tags": [
+      "SECURITY"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-secrets-management-21",
+    "title": "Common Mistakes in Secrets management",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply secrets management to credential rotation, secret handling and least privilege.",
+    "category": "SECURITY",
+    "tags": [
+      "SECURITY"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-secrets-management-21",
+    "title": "A Production Checklist for Secrets management",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply secrets management to credential rotation, secret handling and least privilege.",
+    "category": "SECURITY",
+    "tags": [
+      "SECURITY"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-python-for-devops-22",
+    "title": "A Practical Guide to Python for DevOps",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply python for devops to API automation, reporting and practical platform tooling.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "10 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-python-for-devops-22",
+    "title": "Best Practices for Python for DevOps",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply python for devops to API automation, reporting and practical platform tooling.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-python-for-devops-22",
+    "title": "Common Mistakes in Python for DevOps",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply python for devops to API automation, reporting and practical platform tooling.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-python-for-devops-22",
+    "title": "A Production Checklist for Python for DevOps",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply python for devops to API automation, reporting and practical platform tooling.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-powershell-23",
+    "title": "A Practical Guide to PowerShell",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply powershell to Windows automation, cloud operations and repeatable administration.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "11 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-powershell-23",
+    "title": "Best Practices for PowerShell",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply powershell to Windows automation, cloud operations and repeatable administration.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-powershell-23",
+    "title": "Common Mistakes in PowerShell",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply powershell to Windows automation, cloud operations and repeatable administration.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-powershell-23",
+    "title": "A Production Checklist for PowerShell",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply powershell to Windows automation, cloud operations and repeatable administration.",
+    "category": "AUTOMATION",
+    "tags": [
+      "AUTOMATION"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-ci-cd-testing-24",
+    "title": "A Practical Guide to CI/CD testing",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply ci/cd testing to test stages, quality gates and fast feedback loops.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "12 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-ci-cd-testing-24",
+    "title": "Best Practices for CI/CD testing",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply ci/cd testing to test stages, quality gates and fast feedback loops.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-ci-cd-testing-24",
+    "title": "Common Mistakes in CI/CD testing",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply ci/cd testing to test stages, quality gates and fast feedback loops.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-ci-cd-testing-24",
+    "title": "A Production Checklist for CI/CD testing",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply ci/cd testing to test stages, quality gates and fast feedback loops.",
+    "category": "CI/CD",
+    "tags": [
+      "CI/CD"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-practical-guide-to-platform-engineering-25",
+    "title": "A Practical Guide to Platform engineering",
+    "description": "A practical guide with patterns, trade-offs and a production checklist. Learn how to apply platform engineering to internal developer platforms, golden paths and team enablement.",
+    "category": "PLATFORM",
+    "tags": [
+      "PLATFORM"
+    ],
+    "readingTime": "5 min read",
+    "date": null
+  },
+  {
+    "slug": "best-practices-for-platform-engineering-25",
+    "title": "Best Practices for Platform engineering",
+    "description": "A field-tested set of practices for building safer, more maintainable systems. Learn how to apply platform engineering to internal developer platforms, golden paths and team enablement.",
+    "category": "PLATFORM",
+    "tags": [
+      "PLATFORM"
+    ],
+    "readingTime": "6 min read",
+    "date": null
+  },
+  {
+    "slug": "common-mistakes-in-platform-engineering-25",
+    "title": "Common Mistakes in Platform engineering",
+    "description": "A troubleshooting-focused guide to the mistakes that create avoidable delivery and reliability problems. Learn how to apply platform engineering to internal developer platforms, golden paths and team enablement.",
+    "category": "PLATFORM",
+    "tags": [
+      "PLATFORM"
+    ],
+    "readingTime": "7 min read",
+    "date": null
+  },
+  {
+    "slug": "a-production-checklist-for-platform-engineering-25",
+    "title": "A Production Checklist for Platform engineering",
+    "description": "A concise checklist for reviewing architecture, automation, security and operational readiness. Learn how to apply platform engineering to internal developer platforms, golden paths and team enablement.",
+    "category": "PLATFORM",
+    "tags": [
+      "PLATFORM"
+    ],
+    "readingTime": "8 min read",
+    "date": null
+  }
+]

@@ -1,56 +1,51 @@
-# DevOpsX
+# DevOpsX Engineering Platform
 
-A static React + Vite website for DevOpsX, a DevOps, DevSecOps and cloud infrastructure consulting practice. It has no backend or database and can be deployed directly to GitHub Pages.
+DevOpsX is a static React + Vite engineering knowledge platform for DevOps, DevSecOps, cloud infrastructure, Kubernetes, Terraform, CI/CD, observability, automation and AI-assisted engineering. A build-time prerenderer writes crawlable HTML for each public URL, while React adds search and responsive navigation in the browser.
 
-## Local setup
+## Local development
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open the local URL printed by Vite. The conversion landing page is available at `/devops-consulting`.
-
-## Development and build
+## Validation and build
 
 ```bash
 npm run lint
 npm run build
-npm run preview
+npm run check
 ```
 
-The production output is written to `dist/`.
+`npm run build` first generates `public/sitemap.xml` and `public/search-index.json`, then writes the production site to `dist/`.
 
-## GitHub Pages deployment
+## Routes
 
-The workflow at `.github/workflows/deploy.yml` installs dependencies, lints, builds and deploys `dist` using the current Pages artifact deployment. In repository settings, choose **Pages > Source: GitHub Actions**. Push to `main` to deploy.
+- `/` - engineering platform homepage
+- `/blog` - searchable article archive
+- `/blog/:slug` - article detail pages preserving the existing article URLs
+- `/:topic` - category landing pages for DevOps, DevSecOps, Kubernetes, AWS, Azure, Terraform, GitHub Actions, Observability, Automation and AI
+- `/resources` - resource center
+- `/freelance` - consulting services and process
+- `/about` - about DevOpsX
+- `/search` - client-side article search
 
-For a project URL such as `https://USERNAME.github.io/REPOSITORY/`, set `VITE_BASE_PATH` to `/REPOSITORY/`. For a custom domain, leave it as `/`.
+Every public route is emitted as its own `index.html`, so direct nested route loads do not rely on an SPA fallback.
 
-## Custom domain
+## GitHub Pages
 
-In **Repository Settings > Pages**, choose **GitHub Actions**, then add the custom domain. Create a DNS `CNAME` record from your chosen subdomain to `USERNAME.github.io`, or use GitHub's documented apex records. Enable HTTPS after DNS has propagated. Do not hard-code the eventual domain in source.
+The site is static at runtime. It does not require Node.js, Express, PHP, a database, Supabase, or a server-side API. Deployments are handled by `.github/workflows/deploy.yml` using the GitHub Pages artifact actions. Set **Settings > Pages > Source** to **GitHub Actions**.
 
-## Contact form
+The custom domain is preserved in `public/CNAME` as `devopsx.in`. DNS and HTTPS setup notes are in `docs/github-pages-deployment.md`.
 
-Edit `src/config/contact.js` and set `CONTACT_FORM_ENDPOINT` to a public form provider endpoint that accepts POST submissions. The form uses an email fallback while the endpoint is empty; change `CONTACT_EMAIL` to the real public inbox. Never place private API keys in this repository.
+## Content
 
-## Google Analytics and conversions
+Existing generated and syndicated article data is preserved in `src/data/blogs.js` and `src/data/remoteBlogs.js`. `scripts/generate-static-index.mjs` creates the sitemap and search index, and `scripts/prerender-static-pages.mjs` writes static, metadata-rich page shells from the same content without changing published URLs.
 
-Copy `.env.example` to `.env.local` and set `VITE_GA_ID` to the public measurement ID. Tracking only loads when the variable exists. Add provider-specific conversion events to CTA/form handlers as needed without exposing secrets.
+## Optional integrations
 
-## Social links and content
+- Set `VITE_GA_ID` to enable optional Google Analytics loading.
+- Configure `CONTACT_FORM_ENDPOINT` in `src/config/contact.js` with a public form provider if a hosted form is needed. The default uses an email fallback.
+- Connect the newsletter form to a static-compatible provider before collecting addresses; the default UI intentionally does not submit data anywhere.
 
-Replace placeholder social values in `src/config/site.js`. Services, representative case studies, blog posts and placeholder testimonials live in `src/data/content.js`. Add a project or blog object there; only replace the testimonial placeholder with a verified reference and permission to publish it.
-
-## Scheduled blog refresh
-
-The workflow at `.github/workflows/refresh-blog.yml` runs daily at 07:00 UTC and can also be started manually from **Actions**. It reads trusted RSS feeds, adds one headline and short excerpt to `src/data/remoteBlogs.js`, links to the original article, commits the update and triggers the normal GitHub Pages deployment. It does not copy full third-party articles.
-
-## Static routing note
-
-The app renders `/devops-consulting` as a client-side route. GitHub Pages serves the root app correctly; for direct refreshes on nested routes, configure the host's SPA fallback or use internal navigation.
-
-## Security
-
-No credentials, tokens, customer names, revenue claims or confidential client information are included. Keep `.env` and `.env.local` untracked and use only public configuration values in the frontend.
+Never commit `.env`, tokens, API keys, private keys, or provider credentials.
