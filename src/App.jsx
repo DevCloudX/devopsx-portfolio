@@ -5,6 +5,7 @@ import { siteConfig } from './config/site'
 import { services, projects, blogPosts } from './data/content'
 import { blogs, getBlogBySlug } from './data/blogs'
 import logoImage from './assets/devopsx-mark.svg'
+import BlogHome from './BlogHome'
 import './styles/global.css'
 
 const stats = [{ value: '5+', label: 'Years experience' }, { value: '50+', label: 'Projects delivered' }, { value: '20+', label: 'Teams supported' }, { value: '99.9%', label: 'Reliability focus' }]
@@ -82,6 +83,26 @@ function SimpleHome() {
   return <div className="simple-site"><header className="simple-header"><Logo /><span><i /> OPEN FOR COLLABORATION</span></header><main><section className="simple-dashboard"><div className="simple-profile"><div className="simple-profile-top"><img src={logoImage} alt="DevOpsX mark" /><div><span className="simple-kicker">ABHISHEK RANA / DEVOPSX</span><h1>Abhishek Rana</h1><p>Senior DevSecOps Engineer</p><small>KEEPING PLATFORMS RUNNING SINCE 2017</small></div></div><span className="simple-kicker simple-kicker-spaced">PRACTICE STATUS</span><h2>Building <em>reliable systems.</em></h2><p className="simple-lede">Cloud infrastructure, automation and security for systems that need to keep moving. Available for freelance consulting, project delivery, interview preparation and technical assignment coaching.</p><div className="simple-links"><a href={`mailto:${CONTACT_EMAIL}`}>Email <ArrowRight size={15} /></a><a href="https://www.linkedin.com/in/abhishekrana0317/" target="_blank" rel="noreferrer">LinkedIn <ArrowRight size={15} /></a></div></div><aside className={`simple-build ${pipelineState}`}><div className="simple-build-head"><span>CI/CD PIPELINE</span><strong>{pipelineState === 'error' ? 'ERROR / RETRYING' : 'DEPLOYING'}</strong></div>{stages.map(([label, status]) => <div className={`simple-build-row ${status}`} key={label}><span>{status === 'done' ? '✓' : status === 'active' ? '→' : status === 'error' ? '×' : '↻'}</span><small>{label}</small><i><b /></i></div>)}<div className="simple-build-note">{pipelineState === 'error' ? <>Deployment failed verification.<br />Restarting from source.<br /><br />Retry loop active.</> : <>Pipeline checks passed.<br />Deployment is in progress.<br /><br />Release will be available after verification.</>}</div></aside></section><section className="simple-strip"><span>AWS</span><span>AZURE</span><span>KUBERNETES</span><span>GITHUB ACTIONS</span><span>TERRAFORM</span><span>DEVSECOPS</span></section><section className="simple-contact"><span className="simple-kicker">GET IN TOUCH</span><div className="simple-links"><a href={`mailto:${CONTACT_EMAIL}`}>Email Abhishek <ArrowRight size={15} /></a><a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" rel="noreferrer">WhatsApp <ArrowRight size={15} /></a></div></section></main><footer className="simple-footer"><span>Platform engineering · DevSecOps · Cloud automation</span><span>© 2026 · Hyderabad,India</span></footer><WhatsAppButton /></div>
 }
 
-function App() { const path = window.location.pathname; const blogSlug = path.startsWith('/blog/') ? path.replace('/blog/', '').replace(/\/$/, '') : ''; if (path === '/blog' || path === '/blog/') return <BlogArchivePage />; return blogSlug ? <BlogPostPage blog={getBlogBySlug(blogSlug)} /> : <SimpleHome /> }
+function InteractiveTerminal() {
+  const [open, setOpen] = useState(false)
+  const [command, setCommand] = useState('')
+  const [output, setOutput] = useState(['DevOpsX console ready.', 'Type help to see available commands.'])
+  const runCommand = (event) => {
+    event.preventDefault()
+    const value = command.trim().toLowerCase()
+    const responses = {
+      help: 'status   skills   contact   clear',
+      status: 'systems online | pipeline deploying | collaboration open',
+      skills: 'aws · azure · kubernetes · github actions · terraform · devsecops',
+      contact: `email ${CONTACT_EMAIL} | whatsapp +91 7674047261`,
+    }
+    if (value === 'clear') setOutput([])
+    else if (value) setOutput((current) => [...current, `> ${command}`, responses[value] || `command not found: ${value}`])
+    setCommand('')
+  }
+  return <div className={`interactive-terminal ${open ? 'is-open' : ''}`}><button className="terminal-toggle" onClick={() => setOpen(!open)} aria-expanded={open}><Terminal size={16} /> {open ? 'Close console' : 'Open console'}</button>{open && <div className="terminal-window"><div className="terminal-window-bar"><span><i /> <i /> <i /></span><small>devopsx@control-plane</small></div><div className="terminal-output">{output.map((line, index) => <div key={`${line}-${index}`}>{line}</div>)}</div><form onSubmit={runCommand}><span>$</span><input autoFocus value={command} onChange={(event) => setCommand(event.target.value)} placeholder="type a command" aria-label="Terminal command" /></form></div>}</div>
+}
+
+function App() { const path = window.location.pathname; const blogSlug = path.startsWith('/blog/') ? path.replace('/blog/', '').replace(/\/$/, '') : ''; if (path === '/blog' || path === '/blog/') return <BlogArchivePage />; return blogSlug ? <BlogPostPage blog={getBlogBySlug(blogSlug)} /> : <BlogHome /> }
 
 export default App

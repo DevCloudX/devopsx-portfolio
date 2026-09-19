@@ -234,6 +234,20 @@ h3 { letter-spacing: -0.03em; }
   transition: transform .2s ease, background .2s ease;
 }
 .email-button:hover { transform: translateY(-3px); background: #e5f4f8; }
+.interactive-terminal { position: fixed; bottom: 24px; left: 24px; z-index: 38; }
+.terminal-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 38px; padding: 0 13px; border: 1px solid #9bb4c2; border-radius: 6px; background: #173447; color: #bdebf1; cursor: pointer; font: 10px var(--mono); box-shadow: 0 10px 22px rgba(31, 62, 81, .2); }
+.terminal-toggle:hover { background: #21485c; }
+.terminal-window { position: absolute; bottom: 48px; left: 0; width: min(350px, calc(100vw - 48px)); overflow: hidden; border: 1px solid #3e6878; border-radius: 9px; background: #102532; color: #bdebf1; box-shadow: 0 18px 40px rgba(22, 53, 71, .3); }
+.terminal-window-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 13px; border-bottom: 1px solid #294c5b; background: #173447; }
+.terminal-window-bar > span { display: flex; gap: 5px; }
+.terminal-window-bar i { display: block; width: 6px; height: 6px; border-radius: 50%; background: #d6aa3a; }
+.terminal-window-bar i:first-child { background: #e27676; }
+.terminal-window-bar i:last-child { background: #77c99c; }
+.terminal-window-bar small { color: #88acb9; font: 9px var(--mono); }
+.terminal-output { min-height: 112px; max-height: 170px; overflow: auto; padding: 14px; color: #9ed6df; font: 11px/1.7 var(--mono); }
+.terminal-output div:nth-child(even) { color: #dffbff; }
+.terminal-window form { display: flex; align-items: center; gap: 8px; padding: 11px 13px; border-top: 1px solid #294c5b; color: #a9e96c; font: 11px var(--mono); }
+.terminal-window input { min-width: 0; margin: 0; padding: 0; border: 0; outline: 0; background: transparent; color: #ffffff; font: 11px var(--mono); }
 .menu-button {
   display: none;
   margin-left: 15px;
@@ -1293,6 +1307,8 @@ textarea { resize: vertical; }
   .simple-strip { justify-content: flex-start; }
   .simple-contact { margin: 28px 0 40px; padding: 24px 22px; }
   .email-button { right: 16px; bottom: 74px; }
+  .interactive-terminal { bottom: 16px; left: 16px; }
+  .terminal-window { bottom: 48px; }
 }
 @keyframes simple-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 @keyframes simple-pulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(169, 233, 108, .55); } 50% { box-shadow: 0 0 0 5px rgba(169, 233, 108, 0); } }
