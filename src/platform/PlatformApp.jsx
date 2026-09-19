@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { ArrowRight, Bot, Box, Check, Cloud, Code2, Command, GitBranch, Github, Menu, Network, Search, ShieldCheck, Terminal, X, Zap } from 'lucide-react'
+import { ArrowRight, Bot, Box, Check, Cloud, Code2, Command, GitBranch, Github, Menu, Network, Search, ShieldCheck, X, Zap } from 'lucide-react'
 import { CONTACT_EMAIL } from '../config/contact'
 import { blogs } from '../data/blogs'
 import { categoryDescriptions, guides, resources, services, topics } from './content'
@@ -9,6 +9,13 @@ const siteUrl = 'https://devopsx.in'
 const currentYear = new Date().getFullYear()
 const iconSet = [GitBranch, ShieldCheck, Box, Cloud, Cloud, Code2, Github, Network, Zap, Bot]
 const plainText = (value = '') => value.replace(/&lt;[^&]*&gt;/g, ' ').replace(/<[^>]*>/g, ' ').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim()
+const articleImage = (article) => {
+  const terms = `${article.category || ''} ${article.title || ''} ${article.tags?.join(' ') || ''}`.toLowerCase()
+  if (/(kubernetes|k8s|aks|eks|helm|ingress|kubectl)/.test(terms)) return { src: '/images/kubernetes-production.png', alt: 'Kubernetes production cluster architecture' }
+  if (/(terraform|aws|azure|cloud|finops|lambda|infrastructure)/.test(terms)) return { src: '/images/cloud-infrastructure.png', alt: 'Cloud infrastructure architecture' }
+  if (/(security|devsecops|github|ci\/cd|gitlab|pipeline|automation)/.test(terms)) return { src: '/images/secure-delivery-pipeline.png', alt: 'Secure software delivery pipeline' }
+  return { src: '/images/devopsx-cloud-control-plane.png', alt: 'DevOps cloud control plane' }
+}
 
 function setSeo(title, description, type = 'website') {
   document.title = title
@@ -66,7 +73,8 @@ function TopicCard({ topic, index }) {
 
 function ArticleCard({ article, featured = false }) {
   const category = article.category?.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'devops'
-  return <article className={featured ? 'article-card featured' : 'article-card'}><div className="article-card-art"><span>{article.category || 'DEVOPS'}</span><Terminal size={28} /></div><div className="article-card-body"><div className="article-meta"><span>{article.readTime || '8 min read'}</span><span>{article.publishedAt || 'Field note'}</span></div><h3>{article.title}</h3><p>{plainText(article.excerpt) || 'Practical engineering guidance for reliable platforms and delivery systems.'}</p><a href={`/blog/${article.slug}`} className="platform-text-link">Read article <ArrowRight size={14} /></a><small className="article-author">DevOpsX Editorial / {category}</small></div></article>
+  const visual = articleImage(article)
+  return <article className={featured ? 'article-card featured' : 'article-card'}><div className="article-card-art"><img src={visual.src} alt={visual.alt} loading="lazy" decoding="async" /><span>{article.category || 'DEVOPS'}</span></div><div className="article-card-body"><div className="article-meta"><span>{article.readTime || '8 min read'}</span><span>{article.publishedAt || 'Field note'}</span></div><h3>{article.title}</h3><p>{plainText(article.excerpt) || 'Practical engineering guidance for reliable platforms and delivery systems.'}</p><a href={`/blog/${article.slug}`} className="platform-text-link">Read article <ArrowRight size={14} /></a><small className="article-author">DevOpsX Editorial / {category}</small></div></article>
 }
 
 function HomePage() {
