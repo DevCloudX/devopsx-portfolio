@@ -36,7 +36,7 @@ function Logo() {
 
 function Header() {
   const [open, setOpen] = useState(false)
-  const links = [['Articles', '/blog'], ['Topics', '#topics'], ['Resources', '/resources'], ['Guides', '#guides'], ['About', '/about'], ['Freelance', '/freelance']]
+  const links = [['Articles', '/blog'], ['Topics', '/#topics'], ['Resources', '/resources'], ['Guides', '/#guides'], ['About', '/about'], ['Freelance', '/freelance']]
   return <header className="platform-header"><div className="platform-shell platform-header-inner"><Logo /><nav className={open ? 'platform-nav is-open' : 'platform-nav'} aria-label="Primary navigation">{links.map(([label, href]) => <a href={href} key={label} onClick={() => setOpen(false)}>{label}</a>)}</nav><div className="platform-header-actions"><a className="platform-search-link" href="/search" aria-label="Search articles"><Search size={18} /></a><a className="platform-header-cta" href="/freelance">Work with me <ArrowRight size={15} /></a><button className="platform-menu" type="button" aria-label="Toggle navigation" aria-expanded={open} onClick={() => setOpen(!open)}>{open ? <X size={21} /> : <Menu size={21} />}</button></div></div></header>
 }
 
