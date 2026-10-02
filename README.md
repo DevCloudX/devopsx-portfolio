@@ -1,51 +1,78 @@
-# DevOpsX Engineering Platform
+# DevOpsX
 
-DevOpsX is a static React + Vite engineering knowledge platform for DevOps, DevSecOps, cloud infrastructure, Kubernetes, Terraform, CI/CD, observability, automation and AI-assisted engineering. A build-time prerenderer writes crawlable HTML for each public URL, while React adds search and responsive navigation in the browser.
+**Design. Compare. Validate. Generate.**
 
-## Local development
+DevOpsX is a static, browser-based multi-cloud architecture studio for modeling AWS, Azure, and Google Cloud designs. Projects are stored locally; no cloud credentials, backend, database, OAuth, or AI API are required.
+
+## Features
+
+- React Flow canvas with drag-and-drop service placement, connections, multi-select, pan, zoom, minimap, delete, and undo/redo.
+- Registry-backed catalog with search, provider filtering, recommendations, and virtualized results.
+- Dynamic configuration forms, cross-cloud comparison, reviewed conversion drafts, architecture templates, and local AI-architect demo.
+- Deterministic architecture findings derived from the graph and resource configuration.
+- Illustrative cost estimates, Terraform/Kubernetes/Helm scaffolds, Markdown documentation, PNG/SVG/JSON export, and JSON import.
+- Local project save/load, browser persistence, light/dark theme, and responsive mobile navigation.
+
+## Architecture
+
+The frontend follows a data-to-engine-to-UI flow:
+
+- `src/data/clouds/` contains structured AWS, Azure, and GCP service definitions and cross-cloud mappings.
+- `src/engine/` contains graph creation, deterministic validation, cost assumptions, schema parsing, and generators.
+- `src/state/` owns Zustand editing state and local workspace persistence.
+- `src/App.tsx` renders the catalog, graph, properties, comparison, analysis, and generation views.
+- `src/types/providers.ts` defines future integration boundaries; no provider is connected in this phase.
+
+The interface computes service counts directly from the registry at runtime. The catalog is a curated, extensible selection of major services, not an exhaustive or authoritative inventory.
+
+## Supported Clouds
+
+AWS, Microsoft Azure, and Google Cloud. Mapping labels describe capability overlap and do not claim that products behave identically.
+
+## Development
+
+Requirements: Node.js 20.19+ or 22.12+ and npm.
 
 ```bash
-npm ci
+npm install
 npm run dev
 ```
 
-## Validation and build
+## Build
 
 ```bash
-npm run lint
 npm run build
-npm run check
+npm run preview
 ```
 
-`npm run build` first generates `public/sitemap.xml` and `public/search-index.json`, then writes the production site to `dist/`.
+## GitHub Pages Deployment
 
-## Routes
+Push to `main` to build and deploy the static site through `.github/workflows/deploy.yml`. Vite derives the project base path from `GITHUB_REPOSITORY`, so project pages work under `/<repository>/`. In repository settings, select **GitHub Actions** as the Pages build and deployment source.
 
-- `/` - engineering platform homepage
-- `/blog` - searchable article archive
-- `/blog/:slug` - article detail pages preserving the existing article URLs
-- `/:topic` - category landing pages for DevOps, DevSecOps, Kubernetes, AWS, Azure, Terraform, GitHub Actions, Observability, Automation and AI
-- `/resources` - resource center
-- `/freelance` - consulting services and process
-- `/about` - about DevOpsX
-- `/search` - client-side article search
+## Project Structure
 
-Every public route is emitted as its own `index.html`, so direct nested route loads do not rely on an SPA fallback.
+```text
+src/
+  data/clouds/{aws,azure,gcp,mappings}/
+  engine/{architecture,generators,schema}.ts
+  state/workspace.ts
+  types/{index,providers}.ts
+  App.tsx
+.github/workflows/deploy.yml
+```
 
-## GitHub Pages
+## Future Backend Architecture
 
-The site is static at runtime. It does not require Node.js, Express, PHP, a database, Supabase, or a server-side API. Deployments are handled by `.github/workflows/deploy.yml` using the GitHub Pages artifact actions. Set **Settings > Pages > Source** to **GitHub Actions**.
+Typed interfaces are prepared for AI architecture generation, cloud validation, GitHub export, pricing, security scanning, project storage, and authentication. A future serverless API can implement these interfaces without moving secrets into the public static client. `.env.example` contains only a public API base URL placeholder; never put provider credentials or private API keys in `VITE_*` variables.
 
-The custom domain is preserved in `public/CNAME` as `devopsx.in`. DNS and HTTPS setup notes are in `docs/github-pages-deployment.md`.
+## Important Limitations
 
-## Content
+- Cost values are illustrative demo assumptions, not current provider pricing.
+- Terraform, Kubernetes, and Helm output are local scaffolds requiring provider-specific implementation and review; nothing is deployed.
+- AI architecture generation is a local demo response, not an AI integration.
+- Validation is a deterministic starter rule set, not a compliance certification or security scanner.
+- Projects remain in this browser and are not synchronized.
 
-Existing generated and syndicated article data is preserved in `src/data/blogs.js` and `src/data/remoteBlogs.js`. `scripts/generate-static-index.mjs` creates the sitemap and search index, and `scripts/prerender-static-pages.mjs` writes static, metadata-rich page shells from the same content without changing published URLs.
+## Contributing
 
-## Optional integrations
-
-- Set `VITE_GA_ID` to enable optional Google Analytics loading.
-- Configure `CONTACT_FORM_ENDPOINT` in `src/config/contact.js` with a public form provider if a hosted form is needed. The default uses an email fallback.
-- Connect the newsletter form to a static-compatible provider before collecting addresses; the default UI intentionally does not submit data anywhere.
-
-Never commit `.env`, tokens, API keys, private keys, or provider credentials.
+Add services to provider registry data rather than hardcoding them into components. Extend deterministic engine rules and document relevant behavior when changing architecture semantics.
