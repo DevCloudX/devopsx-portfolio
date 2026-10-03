@@ -608,7 +608,37 @@ function MoreDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (vie
 }
 
 function HelpDialog({ onClose }: { onClose: () => void }) {
-  return <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}><section className="dialog help-dialog" role="dialog" aria-modal="true" aria-labelledby="help-title"><div className="dialog-head"><div><span className="eyebrow">QUICK GUIDE</span><h2 id="help-title">Working with DevOpsX</h2></div><button className="icon-button" onClick={onClose} aria-label="Close help"><X size={17} /></button></div><div className="help-content"><p>Build and review a local architecture. Nothing is deployed and no cloud credentials are requested.</p><ul><li>Add services from the catalog or choose an architecture template.</li><li>Connect resources by dragging between node handles; configure regions and capacity in Properties.</li><li>Review local security rules and illustrative cost scenarios before generating files.</li><li>Save in this browser or export a JSON backup. Generated files are scaffolds and need provider review.</li></ul><div className="help-shortcuts"><span><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> Search services</span><span><kbd>Esc</kbd> Close dialogs</span><span><kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>Z</kbd> Undo</span></div></div><div className="dialog-footer"><span>Changes stay in this browser.</span><button className="primary-button" onClick={onClose}>Done</button></div></section></div>
+  return (
+    <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
+      <section className="dialog help-dialog" role="dialog" aria-modal="true" aria-labelledby="help-title">
+        <div className="dialog-head">
+          <div className="help-title-group">
+            <span className="help-title-icon"><Layers3 size={18} /></span>
+            <div><span className="eyebrow">QUICK GUIDE</span><h2 id="help-title">Working with DevOpsX</h2></div>
+          </div>
+          <button className="icon-button" onClick={onClose} aria-label="Close help"><X size={17} /></button>
+        </div>
+        <div className="help-content">
+          <div className="help-intro"><ShieldCheck size={17} /><p>Build and review a local architecture. Nothing is deployed and no cloud credentials are requested.</p></div>
+          <ol className="help-steps">
+            <li><span>01</span><div><b>Build your architecture</b><p>Add services from the catalog or choose an architecture template.</p></div></li>
+            <li><span>02</span><div><b>Connect and configure</b><p>Drag between node handles, then set regions and capacity in Properties.</p></div></li>
+            <li><span>03</span><div><b>Review your design</b><p>Check local security rules and illustrative cost scenarios before generating files.</p></div></li>
+            <li><span>04</span><div><b>Save or export</b><p>Save in this browser or export a JSON backup. Generated files are scaffolds; review them for your provider.</p></div></li>
+          </ol>
+          <div className="help-shortcut-section">
+            <span className="help-shortcut-title">KEYBOARD SHORTCUTS</span>
+            <div className="help-shortcuts">
+              <div><span><kbd>Ctrl</kbd><i>/</i><kbd>⌘</kbd><b>+</b><kbd>K</kbd></span><small>Search services</small></div>
+              <div><span><kbd>Esc</kbd></span><small>Close dialogs</small></div>
+              <div><span><kbd>Ctrl</kbd><i>/</i><kbd>⌘</kbd><b>+</b><kbd>Z</kbd></span><small>Undo</small></div>
+            </div>
+          </div>
+        </div>
+        <div className="dialog-footer"><span><LockKeyhole size={13} /> Changes stay in this browser.</span><button className="primary-button" onClick={onClose}>Got it</button></div>
+      </section>
+    </div>
+  )
 }
 
 function ProjectsDialog({ close, onImport, onExport, onNavigate, toast }: { close: () => void; onImport: () => void; onExport: () => void; onNavigate: (view: View) => void; toast: (value: string, type?: 'success' | 'error') => void }) {
