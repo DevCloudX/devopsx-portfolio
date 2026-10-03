@@ -555,7 +555,7 @@ function AppWorkspace() {
           <button className="global-search" onClick={() => setModal('search')}><Search size={15} /><span>Search anything</span><kbd>⌘ K</kbd></button>
           <button className="icon-button" onClick={() => useWorkspace.getState().setTheme(theme === 'dark' ? 'light' : 'dark')} title="Toggle theme" aria-label="Toggle theme">{theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}</button>
           <button className="icon-button" onClick={() => setModal('help')} title="Help" aria-label="Help"><CircleHelp size={16} /></button>
-          <span className="avatar" title="Local workspace" aria-label="Local workspace">C</span>
+          <span className="avatar" title="Workspace stored in this browser" aria-label="Workspace stored in this browser"><HardDrive size={15} /></span>
         </div>
       </header>
       {view !== 'Home' && <div className="project-strip">
