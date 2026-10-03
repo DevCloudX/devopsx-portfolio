@@ -51,6 +51,16 @@ npm run preview
 
 Push to `main` to build and deploy the static site through `.github/workflows/deploy.yml`. The configured custom domain uses the root base path; when deploying without `public/CNAME`, Vite derives a project base path from `GITHUB_REPOSITORY`. Module navigation uses URL fragments, so direct module links and browser history work without server-side SPA rewrites. In repository settings, select **GitHub Actions** as the Pages build and deployment source.
 
+## Cloudflare Pages Deployment
+
+The `.github/workflows/cloudflare-pages.yml` workflow deploys pushes to `feature/cloudflare-pages` as Cloudflare preview builds and pushes to `main` as Cloudflare production builds. GitHub Pages remains configured as a fallback; the workflow does not change custom-domain or DNS settings. Create the Cloudflare Pages project first, set its production branch to `main`, then configure these repository settings:
+
+- **Actions secret `CLOUDFLARE_API_TOKEN`**: a Cloudflare API token with Cloudflare Pages edit permission for the target account.
+- **Actions secret `CLOUDFLARE_ACCOUNT_ID`**: the target Cloudflare account ID.
+- **Actions variable `CLOUDFLARE_PAGES_PROJECT`**: the existing Cloudflare Pages project name.
+
+Push to `feature/cloudflare-pages` to build and deploy a branch preview. Review the preview before merging to `main`, which triggers a production build on Cloudflare Pages. The workflow deploys the contents of `dist`; it does not bind `devopsx.in` or change DNS. Attach the custom domain to the Pages project and verify DNS/TLS in Cloudflare before switching production traffic from the current GitHub Pages setup.
+
 ## Project Structure
 
 ```text
