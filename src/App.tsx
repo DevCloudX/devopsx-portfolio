@@ -12,7 +12,7 @@ import { saveWorkspaceLocally, useWorkspace } from './state/workspace'
 import type { Architecture, CanvasNodeData, CloudProvider, CloudService, Finding, Project, ServiceCategory } from './types'
 import '@xyflow/react/dist/style.css'
 
-type View = 'Design' | 'Templates' | 'Compare' | 'Cost' | 'Security' | 'Generate'
+type View = 'Home' | 'Design' | 'Templates' | 'Compare' | 'Cost' | 'Security' | 'Generate'
 type Modal = 'search' | 'projects' | 'ai' | 'convert' | 'help' | 'more' | null
 type GeneratorKind = 'Terraform' | 'Kubernetes' | 'Helm' | 'Documentation'
 const moduleViews: View[] = ['Design', 'Templates', 'Compare', 'Cost', 'Security', 'Generate']
@@ -22,7 +22,54 @@ const categoryIcons: Record<string, typeof Cloud> = { compute: Zap, storage: Har
 
 function viewFromHash(): View {
   const route = window.location.hash.slice(1).toLowerCase()
-  return moduleViews.find((item) => item.toLowerCase() === route) ?? 'Design'
+  if (route === 'home') return 'Home'
+  return route ? moduleViews.find((item) => item.toLowerCase() === route) ?? 'Home' : 'Home'
+}
+
+function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
+  const areas: { name: View; description: string; icon: typeof Layers3 }[] = [
+    { name: 'Design', description: 'Compose cloud systems visually.', icon: Layers3 },
+    { name: 'Templates', description: 'Start from a reusable architecture.', icon: Blocks },
+    { name: 'Compare', description: 'Explore equivalent cloud services.', icon: ArrowLeftRight },
+    { name: 'Cost', description: 'Review illustrative cost estimates.', icon: Gauge },
+    { name: 'Security', description: 'Check modeled risks and findings.', icon: ShieldCheck },
+    { name: 'Generate', description: 'Export infrastructure starter files.', icon: Code2 },
+  ]
+  return (
+    <main className="landing-page">
+      <section className="landing-hero">
+        <div className="landing-copy">
+          <div className="landing-kicker"><span /> MULTI-CLOUD ARCHITECTURE STUDIO</div>
+          <h1>Make your cloud<br /><span>architecture</span> make sense.</h1>
+          <p>Design, compare, and validate your cloud infrastructure in one visual workspace. Start with a blank canvas or explore a template.</p>
+          <div className="landing-actions">
+            <button className="primary-button landing-primary" onClick={() => onNavigate('Design')}>Open architecture designer <ArrowRight size={16} /></button>
+            <button className="secondary-button landing-secondary" onClick={() => onNavigate('Templates')}>Explore templates</button>
+          </div>
+          <div className="landing-proof"><span><i /> AWS</span><span><i /> Azure</span><span><i /> Google Cloud</span><small>One workspace. Your browser.</small></div>
+        </div>
+        <div className="landing-art" aria-label="Animated illustration of connected cloud services" role="img">
+          <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" />
+          <svg className="art-connections" viewBox="0 0 600 440" aria-hidden="true">
+            <path className="connection-line" d="M300 220 165 105M300 220 440 105M300 220 155 330M300 220 450 330M165 105 440 105M155 330 450 330" />
+            <path className="connection-flow" d="M300 220 165 105M300 220 440 105M300 220 155 330M300 220 450 330" />
+            <circle className="art-pulse pulse-one" cx="232" cy="163" r="4" /><circle className="art-pulse pulse-two" cx="369" cy="162" r="4" /><circle className="art-pulse pulse-three" cx="226" cy="274" r="4" /><circle className="art-pulse pulse-four" cx="376" cy="276" r="4" />
+          </svg>
+          <div className="art-center"><span className="art-center-mark"><i /><i /><i /></span><b>Your architecture</b><small>DESIGN · VALIDATE · GENERATE</small></div>
+          <div className="art-card art-aws"><span className="art-provider aws">A</span><div><b>Compute</b><small>Amazon Web Services</small></div><i className="art-status" /></div>
+          <div className="art-card art-azure"><span className="art-provider azure">◧</span><div><b>Networking</b><small>Microsoft Azure</small></div><i className="art-status" /></div>
+          <div className="art-card art-gcp"><span className="art-provider gcp">G</span><div><b>Data platform</b><small>Google Cloud</small></div><i className="art-status" /></div>
+          <div className="art-card art-security"><span className="art-security-icon"><ShieldCheck size={16} /></span><div><b>Security checks</b><small>Local architecture rules</small></div><BadgeCheck className="art-check" size={16} /></div>
+          <div className="art-caption"><span className="art-caption-dot" /> A clearer view of what you're building</div>
+        </div>
+      </section>
+      <section className="landing-areas" aria-labelledby="landing-areas-title">
+        <div className="landing-section-heading"><div><span className="eyebrow">FROM FIRST SKETCH TO STARTER FILES</span><h2 id="landing-areas-title">Everything around your architecture.</h2></div><span>Pick a place to begin <ArrowRight size={14} /></span></div>
+        <div className="landing-area-grid">{areas.map(({ name, description, icon: Icon }) => <button className="landing-area-card" key={name} onClick={() => onNavigate(name)}><span className="landing-area-icon"><Icon size={17} /></span><b>{name}</b><small>{description}</small><ArrowRight className="landing-area-arrow" size={15} /></button>)}</div>
+        <div className="landing-footnote"><LockKeyhole size={13} /> Your workspace runs locally in this browser. Nothing is deployed to your cloud.</div>
+      </section>
+    </main>
+  )
 }
 
 function downloadBlob(blob: Blob, name: string) {
@@ -374,14 +421,15 @@ function AppWorkspace() {
   const notify = (message: string, type: 'success' | 'error' = 'success') => { setToast(message); setToastType(type) }
   const navigateView = (next: View) => {
     setView(next)
-    const hash = `#${next.toLowerCase()}`
+    const hash = next === 'Home' ? '' : `#${next.toLowerCase()}`
     if (window.location.hash !== hash) window.location.hash = hash
   }
   useEffect(() => {
     const syncView = () => {
-      const route = moduleViews.find((item) => item.toLowerCase() === window.location.hash.slice(1).toLowerCase())
-      if (window.location.hash && !route) window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#design`)
-      setView(route ?? 'Design')
+      const route = window.location.hash.slice(1).toLowerCase()
+      const next = viewFromHash()
+      if (route && route !== 'home' && !moduleViews.some((item) => item.toLowerCase() === route)) window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
+      setView(next)
     }
     window.addEventListener('hashchange', syncView)
     window.addEventListener('popstate', syncView)
@@ -475,11 +523,11 @@ function AppWorkspace() {
     else notify('No matching service is registered for this recommendation.', 'error')
   }
 
-  const center = view === 'Design' ? <ReactFlowProvider><Canvas notify={notify} /></ReactFlowProvider> : view === 'Templates' ? <TemplatesView onLoad={loadTemplate} /> : view === 'Compare' ? <CompareView /> : view === 'Cost' ? <CostView architecture={architecture} selected={selected} /> : view === 'Security' ? <SecurityView findings={findings} hasResources={architecture.nodes.length > 0} onFix={fixFinding} /> : <GenerateView architecture={architecture} name={projectName} selected={selected} notify={notify} />
+  const center = view === 'Design' ? <ReactFlowProvider><Canvas notify={notify} /></ReactFlowProvider> : view === 'Templates' ? <TemplatesView onLoad={loadTemplate} /> : view === 'Compare' ? <CompareView /> : view === 'Cost' ? <CostView architecture={architecture} selected={selected} /> : view === 'Security' ? <SecurityView findings={findings} hasResources={architecture.nodes.length > 0} onFix={fixFinding} /> : view === 'Generate' ? <GenerateView architecture={architecture} name={projectName} selected={selected} notify={notify} /> : null
   return (
-    <div className="app-shell">
+    <div className={`app-shell${view === 'Home' ? ' landing-shell' : ''}`}>
       <header className="topbar">
-        <a className="brand" href="#design" onClick={(event) => { event.preventDefault(); navigateView('Design') }} aria-label="DevOpsX home">
+        <a className="brand" href="/" onClick={(event) => { event.preventDefault(); navigateView('Home') }} aria-label="DevOpsX home" aria-current={view === 'Home' ? 'page' : undefined}>
           <span className="brand-symbol"><i /><i /><i /></span>
           <span className="brand-copy"><b>DevOpsX</b><small>ARCHITECTURE STUDIO</small></span>
         </a>
@@ -494,7 +542,7 @@ function AppWorkspace() {
           <span className="avatar" title="Local workspace" aria-label="Local workspace">C</span>
         </div>
       </header>
-      <div className="project-strip">
+      {view !== 'Home' && <div className="project-strip">
         <div className="project-crumb"><i className="crumb-dot" /><button className="project-name" onClick={() => setModal('projects')}>{projectName}<ChevronDown size={13} /></button><span className="project-status">Saved locally</span><span className="project-updated">Last edited just now</span></div>
         <div className="project-actions">
           <button className="text-action new-architecture-action" onClick={createArchitecture} title="Create a new architecture" aria-label="Create a new architecture"><Plus size={14} /><span>New architecture</span></button>
@@ -505,8 +553,8 @@ function AppWorkspace() {
           <button className="primary-button small" onClick={saveProject}><Check size={14} /> Save project</button>
           <input ref={fileRef} hidden type="file" accept=".json,application/json" onChange={(event) => { const file = event.target.files?.[0]; if (file) void importFile(file); event.target.value = '' }} />
         </div>
-      </div>
-      <div className={`workspace-grid mobile-${mobilePanel}`}>
+      </div>}
+      {view === 'Home' ? <LandingView onNavigate={navigateView} /> : <div className={`workspace-grid mobile-${mobilePanel}`}>
         <Catalog onAdd={addService} />
         <main className="workspace-main">
           {center}
@@ -517,8 +565,8 @@ function AppWorkspace() {
           </div>
         </main>
         <Properties onRecommend={addService} notify={notify} />
-      </div>
-      <nav className="mobile-nav" aria-label="Mobile workspace navigation">
+      </div>}
+      {view !== 'Home' && <nav className="mobile-nav" aria-label="Mobile workspace navigation">
         {(['canvas', 'services', 'properties', 'ai', 'more'] as const).map((item) => (
           <button key={item} className={mobilePanel === item || (item === 'more' && modal === 'more') ? 'active' : ''} aria-pressed={mobilePanel === item || (item === 'more' && modal === 'more')} onClick={() => {
             if (item === 'ai') setModal('ai')
@@ -529,7 +577,7 @@ function AppWorkspace() {
             <span>{item}</span>
           </button>
         ))}
-      </nav>
+      </nav>}
       {toast && <div className={`app-toast ${toastType}`} role={toastType === 'error' ? 'alert' : 'status'}>{toastType === 'error' ? <ShieldAlert size={15} /> : <Check size={15} />}{toast}<button onClick={() => setToast('')} aria-label="Dismiss"><X size={13} /></button></div>}
       {modal && modal !== 'more' && modal !== 'help' && <WorkspaceModal type={modal} close={() => setModal(null)} search={search} setSearch={setSearch} onTemplate={loadTemplate} onImport={() => fileRef.current?.click()} onExport={exportJson} onAI={generateAI} onNavigate={navigateView} prompt={prompt} setPrompt={setPrompt} aiProvider={aiProvider} setAiProvider={setAiProvider} architecture={architecture} selected={selected} toast={notify} />}
       {modal === 'help' && <HelpDialog onClose={() => setModal(null)} />}
