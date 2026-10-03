@@ -5,6 +5,7 @@ const defaultPosition = { x: 80, y: 100 }
 
 export function createServiceNode(service: CloudService, position = defaultPosition, overrides: Partial<CanvasNodeData> = {}) {
   const config = Object.fromEntries(Object.entries(service.configurationSchema).map(([key, field]) => [key, field.defaultValue]))
+  if (service.regions.length) config.region = service.regions[0]
   if (service.id === 'aws-rds') Object.assign(config, { publicAccess: true, encrypted: false })
   if (service.id === 'aws-s3') Object.assign(config, { publicAccess: true })
   return {
@@ -89,6 +90,41 @@ function hasService(nodes: Architecture['nodes'], ids: string[]) {
   return nodes.some((node) => ids.some((id) => node.data.serviceId.includes(id)))
 }
 
+function containsCredential(value: string) {
+  return /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\b(?:AKIA|ASIA)[A-Z0-9]{16}\b|\bAIza[0-9A-Za-z_-]{35}\b|\bgh[pousr]_[A-Za-z0-9_]{20,}\b|\bgithub_pat_[A-Za-z0-9_]{20,}\b|\bsk-[A-Za-z0-9_-]{20,}\b/.test(value)
+}
+
+function isCredentialPlaceholder(value: string) {
+  return !value.trim() || /^(?:replace(?:[-_ ]with)?(?:[-_ ].*)?|your(?:[-_ ].*)?|example(?:[-_ ].*)?|dummy(?:[-_ ].*)?|changeme|<[^>]+>|\*+|x+)$/i.test(value.trim())
+}
+
+function isSensitiveConfigValue(key: string, value: string) {
+  return value === '[REDACTED]' || (!isCredentialPlaceholder(value) && (
+    /(?:secret(?!ref|name)|token|password|passwd|api[_-]?key|credential|private[_-]?key)/i.test(key) || containsCredential(value)
+  ))
+}
+
+export function redactCredentialValues(architecture: Architecture) {
+  let redacted = false
+  const nodes = architecture.nodes.map((node) => {
+    const label = containsCredential(node.data.label) ? '[REDACTED]' : node.data.label
+    if (label !== node.data.label) redacted = true
+    const config = Object.fromEntries(Object.entries(node.data.config).map(([key, value]) => {
+      if (typeof value === 'string' && isSensitiveConfigValue(key, value)) {
+        redacted = true
+        return [key, '[REDACTED]']
+      }
+      return [key, value]
+    }))
+    return { ...node, data: { ...node.data, label, config } }
+  })
+  return { architecture: { nodes, edges: architecture.edges }, redacted }
+}
+
+export function redactCredentialText(value: string) {
+  return containsCredential(value) ? '[REDACTED]' : value
+}
+
 export function validateArchitecture(architecture: Architecture): Finding[] {
   const { nodes, edges } = architecture
   const findings: Finding[] = []
@@ -108,6 +144,15 @@ export function validateArchitecture(architecture: Architecture): Finding[] {
   for (const node of nodes) {
     const service = servicesById.get(node.data.serviceId)
     const config = node.data.config
+    const hasCredential = node.data.label === '[REDACTED]' || Object.entries(config).some(([key, value]) => typeof value === 'string' && isSensitiveConfigValue(key, value))
+    if (hasCredential) add({
+      severity: 'high',
+      category: 'security',
+      title: 'Possible credential in service configuration',
+      description: 'A credential-like value was detected. Its value is hidden; remove it and rotate it if it has been shared.',
+      remediation: 'Remove credentials from the architecture and use a managed secret reference instead.',
+      nodeId: node.id,
+    })
     if (node.data.category === 'database' && config.publicAccess === true) add({ severity: 'high', category: 'security', title: `${node.data.label} allows public access`, description: 'A database node is configured with public access enabled.', remediation: 'Disable public access and use private network connectivity.', nodeId: node.id })
     if (node.data.category === 'storage' && config.publicAccess === true) add({ severity: 'high', category: 'security', title: `${node.data.label} allows public access`, description: 'A storage node is configured to allow public access.', remediation: 'Block public access and use scoped identity-based permissions.', nodeId: node.id })
     if ((node.data.category === 'database' || node.data.category === 'storage') && config.encrypted === false) add({ severity: 'medium', category: 'security', title: `${node.data.label} encryption is disabled`, description: 'Encryption at rest is disabled for this data service.', remediation: 'Enable encryption and review key ownership and rotation.', nodeId: node.id })
@@ -127,8 +172,9 @@ export function estimateMonthlyCost(architecture: Architecture, provider?: Cloud
   for (const node of architecture.nodes) {
     const category = node.data.category
     const base = monthlyRates[category] ?? 20
-    const multiplier = Number(node.data.config.desiredCount ?? node.data.config.nodeCount ?? 1)
-    const amount = base * Math.max(1, multiplier) * (provider ? providerMultipliers[provider] : 1)
+    const requestedCount = Number(node.data.config.desiredCount ?? node.data.config.nodeCount ?? 1)
+    const multiplier = Number.isFinite(requestedCount) ? Math.min(100, Math.max(1, requestedCount)) : 1
+    const amount = base * multiplier * (provider ? providerMultipliers[provider] : 1)
     const bucket = category === 'compute' || category === 'containers' ? 'Compute'
       : category === 'database' ? 'Database' : category === 'storage' ? 'Storage'
         : category === 'networking' ? (node.data.label.toLowerCase().includes('load') || node.data.label === 'ALB' ? 'Load balancing' : 'Networking')

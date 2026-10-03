@@ -12,6 +12,8 @@ DevOpsX is a static, browser-based multi-cloud architecture studio for modeling 
 - Deterministic architecture findings derived from the graph and resource configuration.
 - Illustrative cost estimates, Terraform/Kubernetes/Helm scaffolds, Markdown documentation, PNG/SVG/JSON export, and JSON import.
 - Local project save/load, browser persistence, light/dark theme, and responsive mobile navigation.
+- Hash-addressable module navigation for direct links and browser back/forward navigation.
+- Local credential-pattern checks that hide detected values in findings.
 
 ## Architecture
 
@@ -47,7 +49,7 @@ npm run preview
 
 ## GitHub Pages Deployment
 
-Push to `main` to build and deploy the static site through `.github/workflows/deploy.yml`. Vite derives the project base path from `GITHUB_REPOSITORY`, so project pages work under `/<repository>/`. In repository settings, select **GitHub Actions** as the Pages build and deployment source.
+Push to `main` to build and deploy the static site through `.github/workflows/deploy.yml`. The configured custom domain uses the root base path; when deploying without `public/CNAME`, Vite derives a project base path from `GITHUB_REPOSITORY`. Module navigation uses URL fragments, so direct module links and browser history work without server-side SPA rewrites. In repository settings, select **GitHub Actions** as the Pages build and deployment source.
 
 ## Project Structure
 
@@ -68,9 +70,11 @@ Typed interfaces are prepared for AI architecture generation, cloud validation, 
 ## Important Limitations
 
 - Cost values are illustrative demo assumptions, not current provider pricing.
+- Cost scenario multipliers are illustrative and do not model region-specific rates or live provider quotes.
 - Terraform, Kubernetes, and Helm output are local scaffolds requiring provider-specific implementation and review; nothing is deployed.
 - AI architecture generation is a local demo response, not an AI integration.
 - Validation is a deterministic starter rule set, not a compliance certification or security scanner.
+- Credential-pattern checks only catch common formats and are not a substitute for a dedicated secret scanner. Keep real credentials out of architecture configuration and exported files.
 - Projects remain in this browser and are not synchronized.
 
 ## Contributing

@@ -2,20 +2,10 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+DevOpsX does not currently publish versioned releases. Security fixes are made against the `main` branch.
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Please report suspected vulnerabilities privately through GitHub's private vulnerability reporting feature for this repository, if enabled, or contact the maintainers through the repository's official channels. Do not include real credentials, tokens, or customer data in a report.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Include the affected page or source area, steps to reproduce, and the potential impact. The project is a static, browser-based architecture editor and does not connect to cloud accounts or deploy infrastructure.

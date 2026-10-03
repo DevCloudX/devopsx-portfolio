@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { Connection, Edge, Node, OnEdgesChange, OnNodesChange } from '@xyflow/react'
 import { applyEdgeChanges, applyNodeChanges, addEdge } from '@xyflow/react'
 import type { Architecture, CanvasNodeData, CloudProvider, CloudService } from '../types'
-import { createDemoArchitecture, createServiceNode } from '../engine/architecture'
+import { createDemoArchitecture, createServiceNode, redactCredentialText } from '../engine/architecture'
 import { parseArchitecture } from '../engine/schema'
 
 type Snapshot = { nodes: Node<CanvasNodeData>[]; edges: Edge[] }
@@ -35,7 +35,7 @@ function readSaved(): Partial<Snapshot & Pick<WorkspaceState, 'projectName' | 't
       const architecture = parseArchitecture(parsed)
       return {
         ...architecture,
-        projectName: typeof parsed.projectName === 'string' ? parsed.projectName : undefined,
+        projectName: typeof parsed.projectName === 'string' ? redactCredentialText(parsed.projectName) : undefined,
         theme: ['light', 'dark', 'system'].includes(parsed.theme) ? parsed.theme : undefined,
         selectedProviders: Array.isArray(parsed.selectedProviders) && parsed.selectedProviders.every((provider: unknown) => ['aws', 'azure', 'gcp'].includes(String(provider))) ? parsed.selectedProviders : undefined,
       }
@@ -101,5 +101,8 @@ export const useWorkspace = create<WorkspaceState>((set) => ({
 export function saveWorkspaceLocally(state = useWorkspace.getState()) {
   try {
     localStorage.setItem('cloudcanvas.workspace', JSON.stringify({ nodes: state.nodes, edges: state.edges, projectName: state.projectName, theme: state.theme, selectedProviders: state.selectedProviders }))
-  } catch { /* Browser storage can be disabled or full. */ }
+    return true
+  } catch {
+    return false
+  }
 }

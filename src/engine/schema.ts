@@ -1,5 +1,6 @@
 import type { Architecture, CloudProvider, Project } from '../types'
 import { cloudServices } from '../data/clouds'
+import { redactCredentialText, redactCredentialValues } from './architecture'
 
 const providerIds = new Set<CloudProvider>(['aws', 'azure', 'gcp'])
 const categories = new Set(['compute', 'storage', 'database', 'networking', 'containers', 'security', 'integration', 'analytics', 'ai-ml', 'devtools', 'monitoring', 'management', 'migration', 'cost', 'iot', 'media'])
@@ -33,12 +34,12 @@ export function parseArchitecture(value: unknown): Architecture {
     edgeIds.add(edge.id)
     return value as Architecture['edges'][number]
   })
-  return { nodes, edges }
+  return redactCredentialValues({ nodes, edges }).architecture
 }
 
 export function parseProject(value: unknown): Project {
   if (!value || typeof value !== 'object') throw new Error('Project must be an object.')
   const project = value as Record<string, unknown>
   if (typeof project.id !== 'string' || typeof project.name !== 'string' || !project.name.trim() || !Array.isArray(project.cloudProviders) || project.cloudProviders.some((provider) => !providerIds.has(provider as CloudProvider)) || typeof project.createdAt !== 'string' || typeof project.updatedAt !== 'string') throw new Error('Project metadata is invalid.')
-  return { ...project, architecture: parseArchitecture(project.architecture) } as Project
+  return { ...project, name: redactCredentialText(project.name), architecture: parseArchitecture(project.architecture) } as Project
 }
