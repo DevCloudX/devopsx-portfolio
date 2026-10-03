@@ -36,8 +36,9 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
     { name: 'Generate', description: 'Export infrastructure starter files.', icon: Code2 },
   ]
   return (
-    <main className="landing-page">
-      <section className="landing-hero">
+    <div className="landing-page">
+      <main className="landing-main">
+        <section className="landing-hero">
         <div className="landing-copy">
           <div className="landing-kicker"><span /> MULTI-CLOUD ARCHITECTURE STUDIO</div>
           <h1>Make your cloud<br /><span>architecture</span> make sense.</h1>
@@ -66,13 +67,24 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
           <div className="art-card art-security"><span className="art-security-icon"><ShieldCheck size={16} /></span><div><b>Security checks</b><small>Local architecture rules</small></div><BadgeCheck className="art-check" size={16} /></div>
           <div className="art-caption"><span className="art-caption-dot" /> A clearer view of what you're building</div>
         </div>
-      </section>
-      <section className="landing-areas" aria-labelledby="landing-areas-title">
+        </section>
+        <section className="landing-areas" aria-labelledby="landing-areas-title">
         <div className="landing-section-heading"><div><span className="eyebrow">FROM FIRST SKETCH TO STARTER FILES</span><h2 id="landing-areas-title">Everything around your architecture.</h2></div><span>Pick a place to begin <ArrowRight size={14} /></span></div>
         <div className="landing-area-grid">{areas.map(({ name, description, icon: Icon }) => <button className="landing-area-card" key={name} onClick={() => onNavigate(name)}><span className="landing-area-icon"><Icon size={17} /></span><b>{name}</b><small>{description}</small><ArrowRight className="landing-area-arrow" size={15} /></button>)}</div>
-        <div className="landing-footnote"><LockKeyhole size={13} /> Your workspace runs locally in this browser. Nothing is deployed to your cloud.</div>
-      </section>
-    </main>
+          <div className="landing-footnote"><LockKeyhole size={13} /> Your workspace runs locally in this browser. Nothing is deployed to your cloud.</div>
+        </section>
+      </main>
+      <footer className="landing-footer">
+        <a className="landing-footer-brand" href="/" aria-label="DevOpsX home">
+          <span className="brand-symbol"><i /><i /><i /></span>
+          <span><b>DevOpsX</b><small>ARCHITECTURE STUDIO</small></span>
+        </a>
+        <nav className="landing-footer-nav" aria-label="Footer navigation">
+          {moduleViews.map((area) => <a key={area} href={`#${area.toLowerCase()}`}>{area}</a>)}
+        </nav>
+        <span className="landing-footer-note"><LockKeyhole size={13} /> Runs locally in your browser</span>
+      </footer>
+    </div>
   )
 }
 
