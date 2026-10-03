@@ -41,14 +41,15 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
         <div className="landing-copy">
           <div className="landing-kicker"><span /> MULTI-CLOUD ARCHITECTURE STUDIO</div>
           <h1>Make your cloud<br /><span>architecture</span> make sense.</h1>
-          <p>Design, compare, and validate your cloud infrastructure in one visual workspace. Start with a blank canvas or explore a template.</p>
+          <p>Map services across AWS, Azure, and Google Cloud. Check your design, explore cost estimates, and generate starter files—all in one workspace.</p>
           <div className="landing-actions">
-            <button className="primary-button landing-primary" onClick={() => onNavigate('Design')}>Open architecture designer <ArrowRight size={16} /></button>
+            <button className="primary-button landing-primary" onClick={() => onNavigate('Design')}>Start designing <ArrowRight size={16} /></button>
             <button className="secondary-button landing-secondary" onClick={() => onNavigate('Templates')}>Explore templates</button>
           </div>
           <div className="landing-proof"><span><i /> AWS</span><span><i /> Azure</span><span><i /> Google Cloud</span><small>One workspace. Your browser.</small></div>
         </div>
         <div className="landing-art" aria-label="Animated illustration of connected cloud services" role="img">
+          <div className="art-topline"><span><i /> SYSTEM MAP</span><b><Cloud size={12} /> 3 CLOUDS</b></div>
           <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" />
           <svg className="art-connections" viewBox="0 0 600 440" aria-hidden="true">
             <path className="connection-line" d="M300 220 165 105M300 220 440 105M300 220 155 330M300 220 450 330M165 105 440 105M155 330 450 330" />
