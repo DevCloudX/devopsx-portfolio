@@ -53,7 +53,10 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
           <div className="art-orbit orbit-one" /><div className="art-orbit orbit-two" />
           <svg className="art-connections" viewBox="0 0 600 440" aria-hidden="true">
             <path className="connection-line" d="M300 220 165 105M300 220 440 105M300 220 155 330M300 220 450 330M165 105 440 105M155 330 450 330" />
-            <path className="connection-flow" d="M300 220 165 105M300 220 440 105M300 220 155 330M300 220 450 330" />
+            <path className="connection-signal signal-one" d="M300 220 165 105" />
+            <path className="connection-signal signal-two" d="M300 220 440 105" />
+            <path className="connection-signal signal-three" d="M300 220 155 330" />
+            <path className="connection-signal signal-four" d="M300 220 450 330" />
             <circle className="art-pulse pulse-one" cx="232" cy="163" r="4" /><circle className="art-pulse pulse-two" cx="369" cy="162" r="4" /><circle className="art-pulse pulse-three" cx="226" cy="274" r="4" /><circle className="art-pulse pulse-four" cx="376" cy="276" r="4" />
           </svg>
           <div className="art-center"><span className="art-center-mark"><i /><i /><i /></span><b>Your architecture</b><small>DESIGN · VALIDATE · GENERATE</small></div>
