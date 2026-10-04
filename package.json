@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:windows": "tsc -b && vite build --base=./ && electron-builder --win portable --x64 --publish never",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -27,9 +28,35 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
+    "electron": "^44.5.1",
+    "electron-builder": "^26.15.3",
     "oxlint": "^1.81.0",
     "tailwindcss": "^4.3.3",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
+  },
+  "main": "electron/main.cjs",
+  "build": {
+    "appId": "in.devopsx.portfolio",
+    "productName": "DevOpsX",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/main.cjs",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "DevOpsX-Portable-${version}-${arch}.${ext}"
+    }
   }
 }

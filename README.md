@@ -50,6 +50,17 @@ npm run build
 npm run preview
 ```
 
+## Portable Windows App
+
+Build the no-install Windows x64 executable locally on Windows:
+
+```bash
+npm ci
+npm run build:windows
+```
+
+The portable executable is written to `release/`. Push to `main` or manually run **Build DevOpsX Windows Portable App** from GitHub Actions to create a downloadable `DevOpsX-Windows-Portable` artifact. The workflow artifact is retained for 30 days. The app stores workspace data in the current Windows user's local Electron profile; it does not connect to cloud accounts or deploy resources. Windows may show a SmartScreen warning because the executable is not code-signed.
+
 ## GitHub Pages Deployment
 
 Push to `main` to build and deploy the static site through `.github/workflows/deploy.yml`. The configured custom domain uses the root base path; when deploying without `public/CNAME`, Vite derives a project base path from `GITHUB_REPOSITORY`. Module navigation uses URL fragments, so direct module links and browser history work without server-side SPA rewrites. In repository settings, select **GitHub Actions** as the Pages build and deployment source.
