@@ -14,6 +14,7 @@ DevOpsX is a static, browser-based multi-cloud architecture studio for modeling 
 - Local project save/load, browser persistence, light/dark theme, and responsive mobile navigation.
 - Hash-addressable module navigation for direct links and browser back/forward navigation.
 - Local credential-pattern checks that hide detected values in findings.
+- Service-specific AWS, Microsoft Azure, and Google Cloud icons are used for architecture resources; provider logos identify clouds in provider selectors and other provider-level views.
 
 ## Architecture
 
@@ -30,6 +31,8 @@ The interface computes service counts directly from the registry at runtime. The
 ## Supported Clouds
 
 AWS, Microsoft Azure, and Google Cloud. Mapping labels describe capability overlap and do not claim that products behave identically.
+
+Provider logo SVGs are bundled locally from Iconify's Logos collection (CC0-1.0), so the interface does not fetch icons from a remote service. The provider names and marks remain trademarks of their respective owners.
 
 ## Development
 

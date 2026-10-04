@@ -1,15 +1,11 @@
 import { memo, useMemo, useRef, useState, type DragEvent } from 'react'
-import { Activity, ArrowLeftRight, ArrowRight, Blocks, Boxes, Cloud, Code2, Database, Download, FileCode2, GitBranch, Globe2, HardDrive, Layers3, LockKeyhole, Network, Plus, Settings2, Shield, Zap } from 'lucide-react'
+import { ArrowLeftRight, ArrowRight, Cloud, Download, FileCode2, GitBranch, Globe2, Layers3, LockKeyhole, Plus, Settings2 } from 'lucide-react'
 import { Background, BackgroundVariant, Controls, Handle, MiniMap, Position, ReactFlow, ReactFlowProvider, useReactFlow, type Node, type NodeProps } from '@xyflow/react'
 import { providerLabels, servicesById } from './data/clouds'
 import { useWorkspace } from './state/workspace'
+import ServiceLogo from './components/ServiceLogo'
 import type { CanvasNodeData, CloudProvider } from './types'
 
-const categoryIcons: Record<string, typeof Cloud> = {
-  compute: Zap, storage: HardDrive, database: Database, networking: Network, containers: Boxes, security: Shield,
-  integration: GitBranch, analytics: Activity, 'ai-ml': Blocks, devtools: Code2, monitoring: Globe2,
-  management: Settings2, migration: ArrowLeftRight, cost: Globe2, iot: Globe2, media: Layers3,
-}
 const providerDefaults: Record<CloudProvider, string> = { aws: 'us-east-1', azure: 'eastus', gcp: 'us-central1' }
 const providerColors: Record<CloudProvider, string> = { aws: '#e88921', azure: '#1686d9', gcp: '#4285f4' }
 
@@ -28,9 +24,8 @@ function downloadFile(name: string, text: string, type = 'text/plain') {
 
 function ServiceNode({ data, selected }: NodeProps<Node<CanvasNodeData>>) {
   const service = servicesById.get(data.serviceId)
-  const Icon = categoryIcons[data.category] ?? Cloud
   return <div className={`service-node provider-${data.provider}${selected ? ' is-selected' : ''}`} style={{ '--provider-color': service?.color ?? '#547392' } as React.CSSProperties}>
-    <Handle type="target" position={Position.Left} /><div className="node-topline"><span className="node-icon"><Icon size={15} /></span><b>{data.label}</b><span className={`node-health ${data.status}`} /></div>
+    <Handle type="target" position={Position.Left} /><div className="node-topline"><span className="node-icon">{service && <ServiceLogo service={service} />}</span><b>{data.label}</b><span className={`node-health ${data.status}`} /></div>
     <div className="node-description">{service?.description ?? 'Cloud resource'}</div><div className="node-meta">{providerLabels[data.provider]} <i /> {String(data.config.region ?? service?.regions[0] ?? 'Default region')}</div><Handle type="source" position={Position.Right} />
   </div>
 }

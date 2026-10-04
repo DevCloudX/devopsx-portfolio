@@ -199,3 +199,12 @@ button { cursor: pointer; }
   .landing-footnote { padding-top: 8px; }
   .landing-footer { min-height: 64px; padding-top: 10px; padding-bottom: 10px; }
 }
+.provider-logo { display: block; width: 100%; height: 100%; object-fit: contain; }
+.service-logo { display: block; width: 100%; height: 100%; object-fit: contain; }
+.provider-mark { color: inherit; background: var(--surface); border: 1px solid var(--line); }
+.provider-mark.aws, .provider-mark.azure, .provider-mark.gcp { background: var(--surface); }
+.service-icon.aws, .service-icon.azure, .service-icon.gcp { color: inherit; background: var(--surface); border: 1px solid var(--line); padding: 4px; }
+.selected-service-icon.aws, .selected-service-icon.azure, .selected-service-icon.gcp { background: var(--surface); border: 1px solid var(--line); }
+.art-provider, .art-provider.aws, .art-provider.azure, .art-provider.gcp { color: inherit; background: rgba(255,255,255,.94); }
+.node-icon { width: 20px; height: 20px; flex: 0 0 20px; }
+.node-icon .service-logo { width: 20px; height: 20px; }
