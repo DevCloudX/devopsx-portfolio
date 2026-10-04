@@ -1,0 +1,13 @@
+name: Local DevOps AI
+version: 1.0.0
+schema: v1
+
+models:
+  - name: Qwen3 8B Local
+    provider: ollama
+    model: qwen3:8b
+    apiBase: http://localhost:11434
+    roles:
+      - chat
+      - edit
+      - apply

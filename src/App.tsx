@@ -1,29 +1,28 @@
-import { memo, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
+import { lazy, memo, Suspense, useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from 'react'
 import { Activity, ArrowLeftRight, ArrowRight, BadgeCheck, Blocks, Boxes, Braces, Check, ChevronDown, CircleHelp, Cloud, Code2, Copy, Database, Download, FileCode2, FileJson, FileText, Gauge, GitBranch, Globe2, HardDrive, HeartPulse, Layers3, LockKeyhole, Menu, Moon, Network, PanelRightClose, Plus, Search, Settings2, Shield, ShieldAlert, ShieldCheck, Sun, X, Zap } from 'lucide-react'
-import { Background, BackgroundVariant, Controls, Handle, MiniMap, Position, ReactFlow, ReactFlowProvider, useReactFlow, type Node, type NodeProps } from '@xyflow/react'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { toPng, toSvg } from 'html-to-image'
-import JSZip from 'jszip'
 import { cloudServices, categoryLabels, providerLabels, servicesById } from './data/clouds'
 import { architectureTemplates, estimateMonthlyCost, redactCredentialText, scoreFindings, templateArchitecture, validateArchitecture } from './engine/architecture'
 import { generateDocumentation, generateHelm, generateKubernetes, generateTerraform } from './engine/generators'
 import { parseArchitecture, parseProject } from './engine/schema'
 import { saveWorkspaceLocally, useWorkspace } from './state/workspace'
-import type { Architecture, CanvasNodeData, CloudProvider, CloudService, Finding, Project, ServiceCategory } from './types'
+import type { Architecture, CloudProvider, CloudService, Finding, Project, ServiceCategory } from './types'
 import '@xyflow/react/dist/style.css'
 
 type View = 'Home' | 'Design' | 'Templates' | 'Compare' | 'Cost' | 'Security' | 'Generate'
 type Modal = 'search' | 'projects' | 'ai' | 'convert' | 'help' | 'more' | null
 type GeneratorKind = 'Terraform' | 'Kubernetes' | 'Helm' | 'Documentation'
-const moduleViews: View[] = ['Design', 'Templates', 'Compare', 'Cost', 'Security', 'Generate']
+const moduleViews: View[] = ['Design', 'Templates', 'Compare', 'Cost']
+const routableViews: View[] = [...moduleViews, 'Security', 'Generate']
 const providers: CloudProvider[] = ['aws', 'azure', 'gcp']
+const Canvas = lazy(() => import('./Canvas'))
 const providerMark: Record<CloudProvider, string> = { aws: 'A', azure: '◧', gcp: 'G' }
 const categoryIcons: Record<string, typeof Cloud> = { compute: Zap, storage: HardDrive, database: Database, networking: Network, containers: Boxes, security: Shield, integration: GitBranch, analytics: Activity, 'ai-ml': Blocks, devtools: Code2, monitoring: Gauge, management: Settings2, migration: ArrowLeftRight, cost: Gauge, iot: Globe2, media: Layers3 }
 
 function viewFromHash(): View {
   const route = window.location.hash.slice(1).toLowerCase()
   if (route === 'home') return 'Home'
-  return route ? moduleViews.find((item) => item.toLowerCase() === route) ?? 'Home' : 'Home'
+  return route ? routableViews.find((item) => item.toLowerCase() === route) ?? 'Home' : 'Home'
 }
 
 function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
@@ -32,8 +31,6 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
     { name: 'Templates', description: 'Start from a reusable architecture.', icon: Blocks },
     { name: 'Compare', description: 'Explore equivalent cloud services.', icon: ArrowLeftRight },
     { name: 'Cost', description: 'Review illustrative cost estimates.', icon: Gauge },
-    { name: 'Security', description: 'Check modeled risks and findings.', icon: ShieldCheck },
-    { name: 'Generate', description: 'Export infrastructure starter files.', icon: Code2 },
   ]
   return (
     <div className="landing-page">
@@ -42,7 +39,7 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
         <div className="landing-copy">
           <div className="landing-kicker"><span /> MULTI-CLOUD ARCHITECTURE STUDIO</div>
           <h1>Make your cloud<br /><span>architecture</span> make sense.</h1>
-          <p>Map services across AWS, Azure, and Google Cloud. Check your design, explore cost estimates, and generate starter files—all in one workspace.</p>
+          <p>Map services across AWS, Azure, and Google Cloud. Review your design and explore illustrative cost estimates—all in one workspace.</p>
           <div className="landing-actions">
             <button className="primary-button landing-primary" onClick={() => onNavigate('Design')}>Start designing <ArrowRight size={16} /></button>
             <button className="secondary-button landing-secondary" onClick={() => onNavigate('Templates')}>Explore templates</button>
@@ -60,16 +57,15 @@ function LandingView({ onNavigate }: { onNavigate: (view: View) => void }) {
             <path className="connection-signal signal-four" d="M300 220 450 330" />
             <circle className="art-pulse pulse-one" cx="232" cy="163" r="4" /><circle className="art-pulse pulse-two" cx="369" cy="162" r="4" /><circle className="art-pulse pulse-three" cx="226" cy="274" r="4" /><circle className="art-pulse pulse-four" cx="376" cy="276" r="4" />
           </svg>
-          <div className="art-center"><span className="art-center-mark"><i /><i /><i /></span><b>Your architecture</b><small>DESIGN · VALIDATE · GENERATE</small></div>
+          <div className="art-center"><span className="art-center-mark"><i /><i /><i /></span><b>Your architecture</b><small>DESIGN · VALIDATE · PLAN</small></div>
           <div className="art-card art-aws"><span className="art-provider aws">A</span><div><b>Compute</b><small>Amazon Web Services</small></div><i className="art-status" /></div>
           <div className="art-card art-azure"><span className="art-provider azure">◧</span><div><b>Networking</b><small>Microsoft Azure</small></div><i className="art-status" /></div>
           <div className="art-card art-gcp"><span className="art-provider gcp">G</span><div><b>Data platform</b><small>Google Cloud</small></div><i className="art-status" /></div>
-          <div className="art-card art-security"><span className="art-security-icon"><ShieldCheck size={16} /></span><div><b>Security checks</b><small>Local architecture rules</small></div><BadgeCheck className="art-check" size={16} /></div>
           <div className="art-caption"><span className="art-caption-dot" /> A clearer view of what you're building</div>
         </div>
         </section>
         <section className="landing-areas" aria-labelledby="landing-areas-title">
-        <div className="landing-section-heading"><div><span className="eyebrow">FROM FIRST SKETCH TO STARTER FILES</span><h2 id="landing-areas-title">Everything around your architecture.</h2></div><span>Pick a place to begin <ArrowRight size={14} /></span></div>
+        <div className="landing-section-heading"><div><span className="eyebrow">FROM FIRST SKETCH TO COST ESTIMATES</span><h2 id="landing-areas-title">Everything around your architecture.</h2></div><span>Pick a place to begin <ArrowRight size={14} /></span></div>
         <div className="landing-area-grid">{areas.map(({ name, description, icon: Icon }) => <button className="landing-area-card" key={name} onClick={() => onNavigate(name)}><span className="landing-area-icon"><Icon size={17} /></span><b>{name}</b><small>{description}</small><ArrowRight className="landing-area-arrow" size={15} /></button>)}</div>
           <div className="landing-footnote"><LockKeyhole size={13} /> Your workspace runs locally in this browser. Nothing is deployed to your cloud.</div>
         </section>
@@ -112,136 +108,30 @@ function readProjects(): Project[] {
   return projects
 }
 
-function ServiceNode({ data, selected }: NodeProps<Node<CanvasNodeData>>) {
-  const service = servicesById.get(data.serviceId)
-  const Icon = categoryIcons[data.category] ?? Cloud
-  return <div className={`service-node provider-${data.provider}${selected ? ' is-selected' : ''}`} style={{ '--provider-color': service?.color ?? '#547392' } as React.CSSProperties}>
-    <Handle type="target" position={Position.Left} /><div className="node-topline"><span className="node-icon"><Icon size={15} /></span><b>{data.label}</b><span className={`node-health ${data.status}`} /></div>
-    <div className="node-description">{service?.description ?? 'Cloud resource'}</div><div className="node-meta">{providerLabels[data.provider]} <i /> {String(data.config.region ?? service?.regions[0] ?? 'Default region')}</div><Handle type="source" position={Position.Right} />
-  </div>
-}
-const nodeTypes = { service: memo(ServiceNode) }
-
-function Catalog({ onAdd }: { onAdd: (service: CloudService) => void }) {
+const Catalog = memo(function Catalog({ onAdd }: { onAdd: (service: CloudService) => void }) {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<ServiceCategory | 'all'>('all')
   const scrollRef = useRef<HTMLDivElement>(null)
   const active = useWorkspace((state) => state.selectedProviders)
-  const results = useMemo(() => cloudServices.filter((service) => active.includes(service.provider) && (category === 'all' || category === service.category) && `${service.name} ${service.description} ${service.category} ${service.provider}`.toLowerCase().includes(search.toLowerCase())), [active, category, search])
+  const activeServices = useMemo(() => cloudServices.filter((service) => active.includes(service.provider)), [active])
+  const categoryCounts = useMemo(() => {
+    const counts = new Map<ServiceCategory, number>()
+    for (const service of activeServices) counts.set(service.category, (counts.get(service.category) ?? 0) + 1)
+    return counts
+  }, [activeServices])
+  const categories = [...categoryCounts.keys()]
+  const query = search.toLowerCase()
+  const results = useMemo(() => activeServices.filter((service) => (category === 'all' || category === service.category) && `${service.name} ${service.description} ${service.category} ${service.provider}`.toLowerCase().includes(query)), [activeServices, category, query])
   // oxlint-disable-next-line react/incompatible-library
   const list = useVirtualizer({ count: results.length, getScrollElement: () => scrollRef.current, estimateSize: () => 58, overscan: 7, initialRect: { width: 240, height: 300 } })
   const virtualRows = list.getVirtualItems()
   const renderedRows = virtualRows.length ? virtualRows : results.map((_, index) => ({ index, start: index * 58, size: 58 }))
   const totalSize = Math.max(list.getTotalSize(), results.length * 58)
-  const categories = [...new Set(cloudServices.filter((service) => active.includes(service.provider)).map((service) => service.category))]
-  return <aside className="catalog-panel"><div className="panel-heading"><div><span className="eyebrow">BUILD</span><h2>Service catalog</h2></div></div><div className="provider-selector"><div className="section-label">CLOUD PROVIDERS <small>{active.length} active</small></div><div className="provider-toggles">{providers.map((provider) => <button key={provider} aria-pressed={active.includes(provider)} className={`provider-toggle ${provider}${active.includes(provider) ? ' active' : ''}`} onClick={() => useWorkspace.getState().toggleProvider(provider)}><span className="provider-mark">{providerMark[provider]}</span>{providerLabels[provider]}{active.includes(provider) && <Check size={12} />}</button>)}</div><div className="catalog-count">{cloudServices.filter((service) => active.includes(service.provider)).length} catalog entries</div></div><label className="field-search"><Search size={15} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Find a service..." aria-label="Search cloud services" /><kbd>/</kbd></label><div className="category-list"><button className={`category${category === 'all' ? ' active' : ''}`} onClick={() => setCategory('all')}><Blocks size={15} /><span>All services</span><b>{cloudServices.filter((service) => active.includes(service.provider)).length}</b></button>{categories.map((item) => { const Icon = categoryIcons[item] ?? Cloud; return <button key={item} className={`category${category === item ? ' active' : ''}`} onClick={() => setCategory(item)}><Icon size={15} /><span>{categoryLabels[item] ?? item}</span><b>{cloudServices.filter((service) => active.includes(service.provider) && service.category === item).length}</b></button> })}</div><div className="catalog-results-head"><span>{search ? `${results.length} RESULTS` : 'POPULAR SERVICES'}</span><Blocks size={13} /></div><div className="service-list" ref={scrollRef}><div style={{ height: totalSize, position: 'relative' }}>{renderedRows.map((row) => { const service = results[row.index]; const Icon = categoryIcons[service.category] ?? Cloud; return <button key={service.id} className="service-row" draggable style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: row.size, transform: `translateY(${row.start}px)` }} onDragStart={(event) => event.dataTransfer.setData('application/devopsx-service', service.id)} onClick={() => onAdd(service)} title={`Add ${service.shortName}`}><span className={`service-icon ${service.provider}`}><Icon size={15} /></span><span className="service-copy"><b>{service.shortName}</b><small>{service.description}</small></span><Plus className="service-add" size={15} /></button> })}{!results.length && <div className="empty-results">No services found.</div>}</div></div><div className="catalog-footer"><span>Extensible service registry</span><b>{cloudServices.length} total</b></div></aside>
-}
+  return <aside className="catalog-panel"><div className="panel-heading"><div><span className="eyebrow">BUILD</span><h2>Service catalog</h2></div></div><div className="provider-selector"><div className="section-label">CLOUD PROVIDERS <small>{active.length} active</small></div><div className="provider-toggles">{providers.map((provider) => <button key={provider} aria-pressed={active.includes(provider)} className={`provider-toggle ${provider}${active.includes(provider) ? ' active' : ''}`} onClick={() => useWorkspace.getState().toggleProvider(provider)}><span className="provider-mark">{providerMark[provider]}</span>{providerLabels[provider]}{active.includes(provider) && <Check size={12} />}</button>)}</div><div className="catalog-count">{activeServices.length} catalog entries</div></div><label className="field-search"><Search size={15} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Find a service..." aria-label="Search cloud services" /><kbd>/</kbd></label><div className="category-list"><button className={`category${category === 'all' ? ' active' : ''}`} onClick={() => setCategory('all')}><Blocks size={15} /><span>All services</span><b>{activeServices.length}</b></button>{categories.map((item) => { const Icon = categoryIcons[item] ?? Cloud; return <button key={item} className={`category${category === item ? ' active' : ''}`} onClick={() => setCategory(item)}><Icon size={15} /><span>{categoryLabels[item] ?? item}</span><b>{categoryCounts.get(item)}</b></button> })}</div><div className="catalog-results-head"><span>{search ? `${results.length} RESULTS` : 'POPULAR SERVICES'}</span><Blocks size={13} /></div><div className="service-list" ref={scrollRef}><div style={{ height: totalSize, position: 'relative' }}>{renderedRows.map((row) => { const service = results[row.index]; const Icon = categoryIcons[service.category] ?? Cloud; return <button key={service.id} className="service-row" draggable style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: row.size, transform: `translateY(${row.start}px)` }} onDragStart={(event) => event.dataTransfer.setData('application/devopsx-service', service.id)} onClick={() => onAdd(service)} title={`Add ${service.shortName}`}><span className={`service-icon ${service.provider}`}><Icon size={15} /></span><span className="service-copy"><b>{service.shortName}</b><small>{service.description}</small></span><Plus className="service-add" size={15} /></button> })}{!results.length && <div className="empty-results">No services found.</div>}</div></div><div className="catalog-footer"><span>Extensible service registry</span><b>{cloudServices.length} total</b></div></aside>
+})
 
-function Canvas({ notify }: { notify: (message: string, type?: 'success' | 'error') => void }) {
-  const root = useRef<HTMLDivElement>(null)
-  const { fitView, screenToFlowPosition } = useReactFlow()
-  const nodes = useWorkspace((state) => state.nodes), edges = useWorkspace((state) => state.edges)
-  const activeProviders = useWorkspace((state) => state.selectedProviders)
-  const selectedId = useWorkspace((state) => state.selectedNodeId)
-  const canUndo = useWorkspace((state) => state.past.length > 0), canRedo = useWorkspace((state) => state.future.length > 0)
-  const [locked, setLocked] = useState(false), [view, setView] = useState('Design'), [interactionMode, setInteractionMode] = useState<'select' | 'connect'>('select')
-  const selected = nodes.find((node) => node.id === selectedId)
-  const regionBadges = activeProviders.flatMap((provider) => {
-    const configured = [...new Set(nodes.filter((node) => node.data.provider === provider).map((node) => String(node.data.config.region ?? servicesById.get(node.data.serviceId)?.regions[0] ?? 'Default region')))]
-    const regions = configured.length ? configured : [provider === 'aws' ? 'us-east-1' : provider === 'azure' ? 'eastus' : 'us-central1']
-    return regions.map((region) => <span key={`${provider}-${region}`}><Cloud size={13} /> {providerLabels[provider]} · {region}</span>)
-  })
-  const [initialViewport] = useState(() => {
-    const mobile = window.innerWidth <= 640
-    const sidebars = mobile ? 18 : window.innerWidth <= 900 ? 246 : 552
-    const width = Math.max(280, window.innerWidth - sidebars)
-    const height = Math.max(230, window.innerHeight - (mobile ? 365 : 330))
-    const minX = Math.min(0, ...nodes.map((node) => node.position.x))
-    const minY = Math.min(0, ...nodes.map((node) => node.position.y))
-    const maxX = Math.max(220, ...nodes.map((node) => node.position.x + 180))
-    const maxY = Math.max(120, ...nodes.map((node) => node.position.y + 90))
-    const zoom = Math.min(0.72, (width - 36) / (maxX - minX), (height - 44) / (maxY - minY))
-    return { x: (width - (maxX - minX) * zoom) / 2 - minX * zoom, y: (height - (maxY - minY) * zoom) / 2 - minY * zoom, zoom }
-  })
-  const exportDiagram = async (format: 'png' | 'svg') => {
-    const viewport = root.current?.querySelector('.react-flow__viewport') as HTMLElement | null
-    if (!viewport) { notify('Unable to export the diagram because the canvas is not ready.', 'error'); return }
-    try {
-      const data = format === 'png' ? await toPng(viewport, { backgroundColor: '#f7f9fc', pixelRatio: 2 }) : await toSvg(viewport, { backgroundColor: '#f7f9fc' })
-      downloadFile(`devopsx-architecture.${format}`, data, format === 'png' ? 'image/png' : 'image/svg+xml')
-      notify(`${format.toUpperCase()} diagram exported.`)
-    } catch {
-      notify(`Unable to export the ${format.toUpperCase()} diagram. Try a smaller architecture or another format.`, 'error')
-    }
-  }
-  const onDrop = (event: React.DragEvent) => { event.preventDefault(); const service = servicesById.get(event.dataTransfer.getData('application/devopsx-service')); if (service) { const id = useWorkspace.getState().addService(service, screenToFlowPosition({ x: event.clientX, y: event.clientY })); useWorkspace.getState().selectNode(id) } }
-  return (
-    <section className="canvas-panel">
-      <div className="canvas-heading">
-        <div>
-          <span className="eyebrow">ARCHITECTURE DESIGNER</span>
-          <h1>Design your cloud architecture visually.</h1>
-          <p>Build, compare, validate and generate AWS, Azure and Google Cloud architectures.</p>
-        </div>
-        <div className="canvas-view-select" role="tablist" aria-label="Architecture view">
-          {['Design', 'Security', 'Network', 'Observability', 'Cost'].map((item) => (
-            <button role="tab" aria-selected={view === item} className={view === item ? 'active' : ''} onClick={() => setView(item)} key={item}>{item}</button>
-          ))}
-        </div>
-      </div>
-      <div className="canvas-toolbar">
-        <div className="toolbar-group">
-          <button className={`tool-button${interactionMode === 'select' ? ' active' : ''}`} title="Select and move" aria-label="Select tool" aria-pressed={interactionMode === 'select'} onClick={() => setInteractionMode('select')}><Settings2 size={15} /></button>
-          <button className={`tool-button${interactionMode === 'connect' ? ' active' : ''}`} title="Connections" aria-label="Connect resources" aria-pressed={interactionMode === 'connect'} onClick={() => setInteractionMode('connect')}><GitBranch size={15} /></button>
-          <button className="tool-button" title="Label selected resource as a group" aria-label="Label selected resource as a group" disabled={!selected} onClick={() => selected && useWorkspace.getState().updateNode(selected.id, { label: `${selected.data.label} group` })}><Layers3 size={15} /></button>
-          <span className="toolbar-separator" />
-          <button className="tool-button" onClick={() => useWorkspace.getState().undo()} title="Undo" aria-label="Undo" disabled={!canUndo}><ArrowLeftRight size={15} /></button>
-          <button className="tool-button" onClick={() => useWorkspace.getState().redo()} title="Redo" aria-label="Redo" disabled={!canRedo}><ArrowRight size={15} /></button>
-        </div>
-        <div className="toolbar-right">
-          <span className="canvas-node-count">{nodes.length} resources <i /> {edges.length} connections</span>
-          <button className={`tool-button${locked ? ' active' : ''}`} onClick={() => setLocked(!locked)} title="Lock canvas" aria-label="Lock canvas" aria-pressed={locked}><LockKeyhole size={15} /></button>
-          <button className="tool-button" onClick={() => fitView({ padding: 0.2, duration: 250 })} title="Fit view" aria-label="Fit view" disabled={!nodes.length}><Globe2 size={15} /></button>
-          <button className="tool-button" onClick={() => void exportDiagram('png')} title="Export PNG"><Download size={15} /></button>
-          <button className="tool-button" onClick={() => void exportDiagram('svg')} title="Export SVG"><FileCode2 size={15} /></button>
-        </div>
-      </div>
-      <div className={`flow-frame view-${view.toLowerCase()}`} ref={root} onDrop={onDrop} onDragOver={(event) => event.preventDefault()}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          nodeTypes={nodeTypes}
-          onNodesChange={useWorkspace.getState().onNodesChange}
-          onEdgesChange={useWorkspace.getState().onEdgesChange}
-          onConnect={useWorkspace.getState().onConnect}
-          onNodeClick={(_, node) => useWorkspace.getState().selectNode(node.id)}
-          onPaneClick={() => useWorkspace.getState().selectNode(null)}
-          defaultViewport={{ x: initialViewport.x, y: initialViewport.y, zoom: initialViewport.zoom }}
-          nodesDraggable={!locked && interactionMode === 'select'}
-          nodesConnectable={!locked}
-          elementsSelectable
-          panOnScroll
-          selectionOnDrag
-          minZoom={0.15}
-          maxZoom={1.8}
-          defaultEdgeOptions={{ type: 'smoothstep', style: { stroke: '#91a4ba', strokeWidth: 1.5 } }}
-          deleteKeyCode={['Backspace', 'Delete']}
-        >
-          <Background variant={BackgroundVariant.Dots} gap={21} size={1} color="#cfdae7" />
-          <MiniMap pannable zoomable nodeColor={(node) => ({ aws: '#e88921', azure: '#1686d9', gcp: '#4285f4' }[String((node.data as CanvasNodeData).provider)] ?? '#67809d')} maskColor="rgba(240,245,250,.72)" />
-          <Controls showInteractive={false} position="bottom-right" />
-        </ReactFlow>
-        {nodes.length === 0 && <div className="canvas-empty"><span><Plus size={19} /></span><b>Start with a service</b><small>Drag from the catalog or choose a template</small></div>}
-        <div className="region-boundary">{regionBadges}</div>
-      </div>
-      <div className="canvas-caption"><span><i className="live-dot" /> Local architecture model</span><span>Illustrative design · not deployed</span></div>
-    </section>
-  )
-}
-
-function Properties({ onRecommend, notify }: { onRecommend: (service: CloudService) => void; notify: (message: string, type?: 'success' | 'error') => void }) {
-  const selectedId = useWorkspace((state) => state.selectedNodeId), nodes = useWorkspace((state) => state.nodes)
-  const node = nodes.find((entry) => entry.id === selectedId)
+const Properties = memo(function Properties({ onRecommend, notify }: { onRecommend: (service: CloudService) => void; notify: (message: string, type?: 'success' | 'error') => void }) {
+  const node = useWorkspace((state) => state.nodes.find((entry) => entry.id === state.selectedNodeId))
   const [tab, setTab] = useState('Configuration')
   if (!node) return <aside className="properties-panel"><div className="panel-heading"><div><span className="eyebrow">INSPECT</span><h2>Properties</h2></div></div><div className="properties-empty"><span><Settings2 size={18} /></span><b>Select a resource</b><p>Click a node to configure its service settings and inspect recommendations.</p><div className="empty-tip"><kbd>⌘</kbd><kbd>K</kbd><span>Quick search</span></div></div><div className="properties-footer"><ShieldCheck size={14} /> Changes stay in this browser</div></aside>
   const service = servicesById.get(node.data.serviceId), Icon = categoryIcons[node.data.category] ?? Cloud
@@ -293,7 +183,7 @@ function Properties({ onRecommend, notify }: { onRecommend: (service: CloudServi
       <div className="properties-footer"><ShieldCheck size={14} /> Changes stay in this browser</div>
     </aside>
   )
-}
+})
 
 function Heading({ eyebrow, title, sub }: { eyebrow: string; title: string; sub: string }) { return <div className="module-heading"><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{sub}</p></div> }
 
@@ -310,13 +200,13 @@ function CompareView() {
 function CostView({ architecture, selected }: { architecture: Architecture; selected: CloudProvider[] }) {
   const [traffic, setTraffic] = useState('1')
   const [resilience, setResilience] = useState<'single' | 'multi-az' | 'multi-region'>('single')
-  const baseEstimate = estimateMonthlyCost(architecture)
+  const baseEstimate = useMemo(() => estimateMonthlyCost(architecture), [architecture])
   const resilienceMultiplier = { single: 1, 'multi-az': 1.35, 'multi-region': 2 }[resilience]
   const scenarioMultiplier = Number(traffic) * resilienceMultiplier
-  const estimate = {
+  const estimate = useMemo(() => ({
     total: baseEstimate.total * scenarioMultiplier,
     breakdown: Object.fromEntries(Object.entries(baseEstimate.breakdown).map(([label, amount]) => [label, amount * scenarioMultiplier])),
-  }
+  }), [baseEstimate, scenarioMultiplier])
   return (
     <div className="module-view">
       <Heading eyebrow="CAPACITY PLANNING" title="Cost estimate" sub="Illustrative estimate, not live cloud pricing. Validate with your provider's current quote." />
@@ -326,7 +216,7 @@ function CostView({ architecture, selected }: { architecture: Architecture; sele
         <span className="estimate-tag">Illustrative only</span>
       </div>
       <div className="cost-provider-grid">{providers.map((provider) => {
-        const providerTotal = estimateMonthlyCost(architecture, provider).total * scenarioMultiplier
+        const providerTotal = baseEstimate.total * ({ aws: 1, azure: 1.035, gcp: 0.965 }[provider]) * scenarioMultiplier
         return <div className={`cost-provider ${provider}`} key={provider}><span className={`provider-mark ${provider}`}>{providerMark[provider]}</span><b>${Math.round(providerTotal).toLocaleString()}</b><small>{providerLabels[provider]} / mo</small><span className="cost-bar"><i style={{ width: `${estimate.total ? Math.max(5, providerTotal / estimate.total * 100) : 0}%` }} /></span></div>
       })}</div>
       <div className="breakdown-panel">
@@ -382,6 +272,7 @@ function GenerateView({ architecture, name, selected, notify }: { architecture: 
     if (cleared || busy) return
     setBusy(true)
     try {
+      const { default: JSZip } = await import('jszip')
       const zip = new JSZip()
       Object.entries(files).forEach(([filename, text]) => zip.file(filename, text))
       downloadBlob(await zip.generateAsync({ type: 'blob' }), `devopsx-${kind.toLowerCase()}.zip`)
@@ -431,10 +322,13 @@ function AppWorkspace() {
   const [mobilePanel, setMobilePanel] = useState('canvas')
   const fileRef = useRef<HTMLInputElement>(null)
   const storageErrorNotified = useRef(false)
-  const nodes = useWorkspace((state) => state.nodes), edges = useWorkspace((state) => state.edges), theme = useWorkspace((state) => state.theme), projectName = useWorkspace((state) => state.projectName), selected = useWorkspace((state) => state.selectedProviders), selectedId = useWorkspace((state) => state.selectedNodeId)
+  const nodes = useWorkspace((state) => state.nodes), analysisNodes = useWorkspace((state) => state.analysisNodes), edges = useWorkspace((state) => state.edges), theme = useWorkspace((state) => state.theme), projectName = useWorkspace((state) => state.projectName), selected = useWorkspace((state) => state.selectedProviders), selectedId = useWorkspace((state) => state.selectedNodeId)
   const architecture = useMemo<Architecture>(() => ({ nodes, edges }), [nodes, edges])
-  const findings = useMemo(() => validateArchitecture(architecture), [architecture]), health = scoreFindings(findings)
-  const notify = (message: string, type: 'success' | 'error' = 'success') => { setToast(message); setToastType(type) }
+  const analysisArchitecture = useMemo<Architecture>(() => ({ nodes: analysisNodes, edges }), [analysisNodes, edges])
+  const findings = useMemo(() => validateArchitecture(analysisArchitecture), [analysisArchitecture])
+  const health = useMemo(() => scoreFindings(findings), [findings])
+  const monthlyEstimate = useMemo(() => estimateMonthlyCost(analysisArchitecture).total, [analysisArchitecture])
+  const notify = useCallback((message: string, type: 'success' | 'error' = 'success') => { setToast(message); setToastType(type) }, [])
   const navigateView = (next: View) => {
     setView(next)
     const hash = next === 'Home' ? '' : `#${next.toLowerCase()}`
@@ -444,7 +338,7 @@ function AppWorkspace() {
     const syncView = () => {
       const route = window.location.hash.slice(1).toLowerCase()
       const next = viewFromHash()
-      if (route && route !== 'home' && !moduleViews.some((item) => item.toLowerCase() === route)) window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
+      if (route && route !== 'home' && !routableViews.some((item) => item.toLowerCase() === route)) window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
       setView(next)
     }
     window.addEventListener('hashchange', syncView)
@@ -465,7 +359,7 @@ function AppWorkspace() {
       }
     }, 350)
     return () => window.clearTimeout(timer)
-  }, [nodes, edges, theme, projectName, selected])
+  }, [nodes, edges, theme, projectName, selected, notify])
   useEffect(() => { const keydown = (event: KeyboardEvent) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); setModal('search') } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'z') { event.preventDefault(); if (event.shiftKey) { useWorkspace.getState().redo() } else { useWorkspace.getState().undo() } } else if (event.key === 'Escape') setModal(null); else if ((event.key === 'Delete' || event.key === 'Backspace') && selectedId && !['INPUT', 'TEXTAREA', 'SELECT'].includes((event.target as HTMLElement).tagName)) useWorkspace.getState().removeNode(selectedId) }; window.addEventListener('keydown', keydown); return () => window.removeEventListener('keydown', keydown) }, [selectedId])
   useEffect(() => { if (toast) { const timer = window.setTimeout(() => setToast(''), 2800); return () => window.clearTimeout(timer) } }, [toast])
 
@@ -486,7 +380,7 @@ function AppWorkspace() {
       notify('Unable to save the project. Browser storage may be unavailable or saved project data may be invalid.', 'error')
     }
   }
-  const addService = (service: CloudService) => { const id = useWorkspace.getState().addService(service, { x: 110 + Math.random() * 250, y: 80 + Math.random() * 240 }); useWorkspace.getState().selectNode(id); if (service.recommendedWith.length) setSuggest(service); setMobilePanel('canvas') }
+  const addService = useCallback((service: CloudService) => { const id = useWorkspace.getState().addService(service, { x: 110 + Math.random() * 250, y: 80 + Math.random() * 240 }); useWorkspace.getState().selectNode(id); if (service.recommendedWith.length) setSuggest(service); setMobilePanel('canvas') }, [])
   const loadTemplate = (index: number) => { const template = architectureTemplates[index]; if (!template) { notify('That architecture template is not available.', 'error'); return } useWorkspace.getState().replaceArchitecture(templateArchitecture(template, selected[0] ?? 'aws')); useWorkspace.getState().setProjectName(template.name); navigateView('Design'); notify(`${template.name} loaded. Review the generated configuration.`) }
   const createArchitecture = () => { if (nodes.length && !window.confirm('Start a new architecture? Unsaved changes to the current canvas will be lost.')) return; useWorkspace.getState().replaceArchitecture({ nodes: [], edges: [] }); useWorkspace.getState().setProjectName('Untitled Architecture'); navigateView('Design'); notify('New architecture created.') }
   const generateAI = (event: FormEvent) => { event.preventDefault(); const template = architectureTemplates.find((item) => item.id === 'ecommerce'); if (!template) { notify('The local architecture draft template is unavailable.', 'error'); return } useWorkspace.getState().replaceArchitecture(templateArchitecture(template, aiProvider)); if (!useWorkspace.getState().selectedProviders.includes(aiProvider)) useWorkspace.getState().toggleProvider(aiProvider); useWorkspace.getState().setProjectName(/e-?commerce/i.test(prompt) ? 'E-Commerce Platform' : 'AI Architecture Draft'); setModal(null); navigateView('Design'); notify('Local architecture draft generated. Review all service mappings.') }
@@ -539,7 +433,7 @@ function AppWorkspace() {
     else notify('No matching service is registered for this recommendation.', 'error')
   }
 
-  const center = view === 'Design' ? <ReactFlowProvider><Canvas notify={notify} /></ReactFlowProvider> : view === 'Templates' ? <TemplatesView onLoad={loadTemplate} /> : view === 'Compare' ? <CompareView /> : view === 'Cost' ? <CostView architecture={architecture} selected={selected} /> : view === 'Security' ? <SecurityView findings={findings} hasResources={architecture.nodes.length > 0} onFix={fixFinding} /> : view === 'Generate' ? <GenerateView architecture={architecture} name={projectName} selected={selected} notify={notify} /> : null
+  const center = view === 'Design' ? <Suspense fallback={<section className="canvas-panel" role="status">Loading architecture canvas…</section>}><Canvas notify={notify} /></Suspense> : view === 'Templates' ? <TemplatesView onLoad={loadTemplate} /> : view === 'Compare' ? <CompareView /> : view === 'Cost' ? <CostView architecture={analysisArchitecture} selected={selected} /> : view === 'Security' ? <SecurityView findings={findings} hasResources={analysisArchitecture.nodes.length > 0} onFix={fixFinding} /> : view === 'Generate' ? <GenerateView architecture={architecture} name={projectName} selected={selected} notify={notify} /> : null
   return (
     <div className={`app-shell${view === 'Home' ? ' landing-shell' : ''}`}>
       <header className="topbar">
@@ -575,9 +469,9 @@ function AppWorkspace() {
         <main className="workspace-main">
           {center}
           <div className="bottom-insights">
-            <button className="insight-health" onClick={() => navigateView('Security')}><span className="health-ring"><HeartPulse size={14} /></span><span><b>Architecture health</b><small>{findings.length} findings to review</small></span><span className="health-value">{Math.round(Object.values(health).reduce((sum, score) => sum + score, 0) / 4)}<small>/100</small></span></button>
-            <div className="insight-score-list">{Object.entries(health).map(([label, score]) => <button key={label} onClick={() => navigateView(label === 'Security' ? 'Security' : 'Design')}><span>{label}</span><b>{score}</b></button>)}</div>
-            <button className="bottom-cost" onClick={() => navigateView('Cost')}><span>MONTHLY ESTIMATE</span><b>${Math.round(estimateMonthlyCost(architecture).total).toLocaleString()}<small> / mo</small></b><ArrowRight size={14} /></button>
+            <div className="insight-health"><span className="health-ring"><HeartPulse size={14} /></span><span><b>Architecture health</b><small>{findings.length} findings to review</small></span><span className="health-value">{Math.round(Object.values(health).reduce((sum, score) => sum + score, 0) / 4)}<small>/100</small></span></div>
+            <div className="insight-score-list">{Object.entries(health).filter(([label]) => label !== 'Security').map(([label, score]) => <span className="insight-score" key={label}><span>{label}</span><b>{score}</b></span>)}</div>
+            <button className="bottom-cost" onClick={() => navigateView('Cost')}><span>MONTHLY ESTIMATE</span><b>${Math.round(monthlyEstimate).toLocaleString()}<small> / mo</small></b><ArrowRight size={14} /></button>
           </div>
         </main>
         <Properties onRecommend={addService} notify={notify} />
@@ -604,7 +498,8 @@ function AppWorkspace() {
 }
 
 function MoreDialog({ onClose, onSelect }: { onClose: () => void; onSelect: (view: View) => void }) {
-  return <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}><section className="dialog more-dialog" role="dialog" aria-modal="true" aria-labelledby="more-title"><div className="dialog-head"><div><span className="eyebrow">WORKSPACE</span><h2 id="more-title">Explore DevOpsX</h2></div><button className="icon-button" onClick={onClose} aria-label="Close"><X size={17} /></button></div><div className="more-view-list">{(['Design', 'Templates', 'Compare', 'Cost', 'Security', 'Generate'] as View[]).map((view) => <button key={view} onClick={() => onSelect(view)}><span>{view === 'Design' ? <Layers3 size={16} /> : view === 'Templates' ? <Blocks size={16} /> : view === 'Compare' ? <ArrowLeftRight size={16} /> : view === 'Cost' ? <Gauge size={16} /> : view === 'Security' ? <ShieldCheck size={16} /> : <Code2 size={16} />}</span><b>{view}</b><ArrowRight size={14} /></button>)}</div></section></div>
+  const icons: Record<string, typeof Layers3> = { Design: Layers3, Templates: Blocks, Compare: ArrowLeftRight, Cost: Gauge }
+  return <div className="modal-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}><section className="dialog more-dialog" role="dialog" aria-modal="true" aria-labelledby="more-title"><div className="dialog-head"><div><span className="eyebrow">WORKSPACE</span><h2 id="more-title">Explore DevOpsX</h2></div><button className="icon-button" onClick={onClose} aria-label="Close"><X size={17} /></button></div><div className="more-view-list">{moduleViews.map((view) => { const Icon = icons[view]; return <button key={view} onClick={() => onSelect(view)}><span><Icon size={16} /></span><b>{view}</b><ArrowRight size={14} /></button> })}</div></section></div>
 }
 
 function HelpDialog({ onClose }: { onClose: () => void }) {
@@ -623,8 +518,8 @@ function HelpDialog({ onClose }: { onClose: () => void }) {
           <ol className="help-steps">
             <li><span>01</span><div><b>Build your architecture</b><p>Add services from the catalog or choose an architecture template.</p></div></li>
             <li><span>02</span><div><b>Connect and configure</b><p>Drag between node handles, then set regions and capacity in Properties.</p></div></li>
-            <li><span>03</span><div><b>Review your design</b><p>Check local security rules and illustrative cost scenarios before generating files.</p></div></li>
-            <li><span>04</span><div><b>Save or export</b><p>Save in this browser or export a JSON backup. Generated files are scaffolds; review them for your provider.</p></div></li>
+            <li><span>03</span><div><b>Review your design</b><p>Check your architecture health and explore illustrative cost scenarios.</p></div></li>
+            <li><span>04</span><div><b>Save or export</b><p>Save in this browser or export a JSON backup before sharing your design.</p></div></li>
           </ol>
           <div className="help-shortcut-section">
             <span className="help-shortcut-title">KEYBOARD SHORTCUTS</span>
